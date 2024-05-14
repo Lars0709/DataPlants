@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.lars0709</groupId>
-	<artifactId>DataPlant</artifactId>
+	<artifactId>DataPlants</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>DataPlant</name>
+	<name>DataPlants</name>
 	<description>Program to track and analyze Plants and their grow</description>
 	<properties>
 		<java.version>22</java.version>

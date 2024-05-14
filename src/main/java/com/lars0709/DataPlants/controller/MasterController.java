@@ -1,4 +1,4 @@
-package com.lars0709.DataPlant.controller;
+package com.lars0709.DataPlants.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;

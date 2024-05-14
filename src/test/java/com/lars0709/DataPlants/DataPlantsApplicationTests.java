@@ -1,10 +1,10 @@
-package com.lars0709.DataPlant;
+package com.lars0709.DataPlants;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DataPlantApplicationTests {
+class DataPlantsApplicationTests {
 
 	@Test
 	void contextLoads() {
