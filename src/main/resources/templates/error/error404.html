@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" data-bs-theme="dark">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Error - 404</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+
+<div th:replace="~{fragments/navBar :: navbar}"></div>
+
+<body>
+
+<div class="d-flex align-items-center justify-content-center vh-100">
+    <div class="text-center">
+        <h1 class="display-1 fw-bold">404</h1>
+        <p class="fs-3"><span class="text-danger">Opps!</span> Page not found.</p>
+        <p class="lead">
+            The page you’re looking for doesn’t exist.
+        </p>
+
+        <a href="/" class="d-inline-flex align-items-center btn btn-danger btn-lg px-4 rounded-pill" role="button">
+            Home
+        </a>
+    </div>
+</div>
+
+<!-- Include Bootstrap JS and its dependencies below -->
+<script src="/static/js/bootstrap.bundle.min.js"></script>
+</body>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+
+</html>

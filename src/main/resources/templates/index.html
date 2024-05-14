@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" data-bs-theme="dark">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Calculation Tool</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+
+<div th:replace="~{fragments/navBar :: navbar}"></div>
+
+<body>
+
+<div class="container my-5">
+    <div class="p-5 text-center bg-body-tertiary rounded-3">
+        <h1 class="text-body-emphasis">UN, EU and OFAC Calculation</h1>
+        <p class="col-lg-8 mx-auto fs-5 text-muted">
+            This Program is designed to show the automation checking of <code>EU-Sanctions</code>, <code>UN-Sanctions</code> and <code>OFAC-Sanctions</code> to improve the work process (WIP).
+        </p>
+        <div class="d-inline-flex gap-2 mb-5">
+            <a href="/search-all" class="d-inline-flex align-items-center btn btn-danger btn-lg px-4 rounded-pill" role="button">
+                Search all
+            </a>
+
+            <a href="/information" class="btn btn-outline-secondary btn-lg px-4 rounded-pill" role="button">
+                Misc. Information
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Include Bootstrap JS and its dependencies below -->
+<script src="/static/js/bootstrap.bundle.min.js"></script>
+</body>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+
+</html>
