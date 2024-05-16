@@ -1,14 +1,16 @@
 package com.lars0709.DataPlants.model;
 
 import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.Type;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity(name = "strain")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Strain {
@@ -18,7 +20,7 @@ public class Strain {
                   Integer sativaLevel, Integer indicaLevel, Integer ruderalisLevel, List<String> feelings,
                   List<String> tastes, String seedOrigin, Integer pricePerSeed, Integer floweringPhaseMin,
                   Integer floweringPhaseMax, Integer seedToHarvestMin, Integer seedToHarvestMax, Integer indoorYieldMin,
-                  Integer indoorYieldMax) {
+                  Integer indoorYieldMax, String imageUrl) {
 
         this.name = name;
         this.description = description;
@@ -43,6 +45,7 @@ public class Strain {
         this.seedToHarvestMax = seedToHarvestMax;
         this.indoorYieldMin = indoorYieldMin;
         this.indoorYieldMax = indoorYieldMax;
+        this.imageUrl = imageUrl;
     }
 
     @Id
@@ -118,4 +121,8 @@ public class Strain {
 
     @Column(name = "indoor_yield_max")
     private Integer indoorYieldMax; //
+
+    @Column(name = "image_url")
+    private String imageUrl;
+
 }
