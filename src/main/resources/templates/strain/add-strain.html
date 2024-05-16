@@ -72,6 +72,27 @@
             <label for="name" class="form-label required">Name</label>
             <input type="text" class="form-control" id="name" th:field="*{name}" required>
         </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="parent_plant_one" class="form-label">parent_plant_one</label>
+                <input type="text" class="form-control" id="parent_plant_one" th:field="*{parent_plant_one}">
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="parent_plant_two" class="form-label">parent_plant_two</label>
+                <input type="text" class="form-control" id="parent_plant_two" th:field="*{parent_plant_two}">
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="parent_plant_three" class="form-label">parent_plant_three</label>
+                <input type="text" class="form-control" id="parent_plant_three" th:field="*{parent_plant_three}">
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <input type="text" class="form-control" id="description" th:field="*{description}">
+        </div>
+
         <div class="mb-3">
             <label for="aliases" class="form-label">Aliases (separated by comma)</label>
             <input type="text" class="form-control" id="aliases" th:field="*{aliases}">
@@ -82,7 +103,7 @@
                 <label for="growType" class="form-label required">Grow Type</label>
                 <select class="form-select form-control" id="growType" th:field="*{growType}" required>
                     <option value="">Select Grow Type</option>
-                    <option value="Autoflower">Autoflower</option>
+                    <option value="Autoflowering">Autoflowering</option>
                     <option value="Photoperiod">Photoperiod</option>
                 </select>
                 <div class="invalid-feedback">
@@ -105,17 +126,21 @@
         </div>
 
         <div class="row">
-            <div class="col-md-4 mb-3">
+            <div class="col-md-6 mb-3">
                 <label for="thcLevel" class="form-label required">THC Level in %</label>
                 <input type="number" step="0.1" class="form-control" id="thcLevel" name="thcLevel" min="0" max="100" required>
             </div>
-            <div class="col-md-4 mb-3">
-                <label for="cbdLevel" class="form-label">CBD Level in %</label>
-                <input type="number" step="0.1" class="form-control" id="cbdLevel" name="cbdLevel" min="0" max="100">
-            </div>
-            <div class="col-md-4 mb-3">
-                <label for="cbgLevel" class="form-label">CBG Level in %</label>
-                <input type="number" step="0.1" class="form-control" id="cbgLevel" name="cbgLevel" min="0" max="100">
+            <div class="col-md-6 mb-3">
+                <label for="cbdLevel" class="form-label">CBD Level</label>
+                <select class="form-select form-control" id="cbdLevel" th:field="*{cbdLevel}">
+                    <option value="">Please select a CBD value</option>
+                    <option value="High">High</option>
+                    <option value="Mid">Mid</option>
+                    <option value="Low">Low</option>
+                </select>
+                <div class="invalid-feedback">
+                    Please select a valid strain type.
+                </div>
             </div>
         </div>
 
@@ -263,8 +288,21 @@
                         </div>
                         <div class="form-check custom-checkbox">
                             <input class="form-check-input" type="checkbox" value="Uplifting" id="uplifting">
-                            <label class="form-check-label" for="uplifting">Uplifted</label>
+                            <label class="form-check-label" for="uplifting">Uplifting</label>
                         </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Clear" id="clear">
+                            <label class="form-check-label" for="clear">Clear</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Heavy" id="heavy">
+                            <label class="form-check-label" for="heavy">Heavy</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Stoned" id="stoned">
+                            <label class="form-check-label" for="stoned">Stoned</label>
+                        </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -340,12 +378,8 @@
                             <label class="form-check-label" for="honey">Honey</label>
                         </div>
                         <div class="form-check custom-checkbox">
-                            <input class="form-check-input" type="checkbox" value="Lime" id="lime">
-                            <label class="form-check-label" for="lime">Lime</label>
-                        </div>
-                        <div class="form-check custom-checkbox">
-                            <input class="form-check-input" type="checkbox" value="Lemon" id="lemon">
-                            <label class="form-check-label" for="lemon">Lemon</label>
+                            <input class="form-check-input" type="checkbox" value="Citrus" id="citrus">
+                            <label class="form-check-label" for="citrus">Citrus</label>
                         </div>
                         <div class="form-check custom-checkbox">
                             <input class="form-check-input" type="checkbox" value="Cookies" id="cookies">
@@ -365,7 +399,6 @@
     </form>
 </div>
 
-<div th:replace="~{fragments/footer :: footer}"></div>
 <!-- Include Bootstrap JS and its dependencies below -->
 <script src="/static/js/bootstrap.bundle.min.js"></script>
 

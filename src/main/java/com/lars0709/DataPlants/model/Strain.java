@@ -13,17 +13,23 @@ import java.util.List;
 @AllArgsConstructor
 public class Strain {
 
-    public Strain(String name, List<String> aliases, String growType, String strainType, Double thcLevel, Double cbdLevel,
-                  Double cbgLevel, Integer sativaLevel, Integer indicaLevel, Integer ruderalisLevel, List<String> feelings, List<String> tastes,
-                  String seedOrigin, Integer pricePerSeed, Integer floweringPhaseMin, Integer floweringPhaseMax, Integer seedToHarvestMin,
-                  Integer seedToHarvestMax, Integer indoorYieldMin, Integer indoorYieldMax) {
+    public Strain(String name, String description, List<String> aliases, String parent_plant_one,String parent_plant_two,
+                  String parent_plant_three, String growType, String strainType, Double thcLevel, String cbdLevel,
+                  Integer sativaLevel, Integer indicaLevel, Integer ruderalisLevel, List<String> feelings,
+                  List<String> tastes, String seedOrigin, Integer pricePerSeed, Integer floweringPhaseMin,
+                  Integer floweringPhaseMax, Integer seedToHarvestMin, Integer seedToHarvestMax, Integer indoorYieldMin,
+                  Integer indoorYieldMax) {
+
         this.name = name;
+        this.description = description;
         this.aliases = aliases;
+        this.parent_plant_one = parent_plant_one;
+        this.parent_plant_two = parent_plant_two;
+        this.parent_plant_three = parent_plant_three;
         this.growType = growType;
         this.strainType = strainType;
         this.thcLevel = thcLevel;
         this.cbdLevel = cbdLevel;
-        this.cbgLevel = cbgLevel;
         this.sativaLevel = sativaLevel;
         this.indicaLevel = indicaLevel;
         this.ruderalisLevel = ruderalisLevel;
@@ -47,8 +53,20 @@ public class Strain {
     @Column(name = "name", nullable = false)
     private String name; // Name of Strain
 
+    @Column(name = "description", length = 2000)
+    private String description; // description of Strain
+
     @Column(name = "aliases")
     private List<String> aliases; // Other names
+
+    @Column(name = "parent_plant_one")
+    private String parent_plant_one;
+
+    @Column(name = "parent_plant_two")
+    private String parent_plant_two;
+
+    @Column(name = "parent_plant_three")
+    private String parent_plant_three;
 
     @Column(name = "grow_type", nullable = false)
     private String growType; // Auto or Photoperiod
@@ -60,10 +78,7 @@ public class Strain {
     private Double thcLevel; // level of thc as percentage
 
     @Column(name = "cbd_level")
-    private Double cbdLevel; // level of cbd as percentage
-
-    @Column(name = "cbg_level")
-    private Double cbgLevel; // level of cbg as percentage
+    private String cbdLevel; // level of cbd as percentage
 
     @Column(name = "sativa_level")
     private Integer sativaLevel; // level of sativa as percentage
@@ -103,10 +118,4 @@ public class Strain {
 
     @Column(name = "indoor_yield_max")
     private Integer indoorYieldMax; //
-
-    /*
-    @Lob
-    @Column(name = "image")
-    private byte[] image;
-     */
 }

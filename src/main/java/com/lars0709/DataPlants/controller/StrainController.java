@@ -27,11 +27,9 @@ public class StrainController {
 
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
-        // This will convert empty strings into null
         dataBinder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
         dataBinder.registerCustomEditor(Double.class, new CustomNumberEditor(Double.class, true));
         dataBinder.registerCustomEditor(Integer.class, new CustomNumberEditor(Integer.class, true));
-        // dataBinder.registerCustomEditor(Byte.class, new CustomNumberEditor(Byte.class, true));
     }
 
     @GetMapping(value = "/strains")
@@ -49,12 +47,15 @@ public class StrainController {
 
     @PostMapping("/strains/add")
     public String saveStrain(@ModelAttribute Strain strain,
+                             @RequestParam(value = "description", required = false) String description,
                              @RequestParam(value = "aliases", required = false) String aliases,
+                             @RequestParam(value = "parent_plant_one", required = false) String parent_plant_one,
+                             @RequestParam(value = "parent_plant_two", required = false) String parent_plant_two,
+                             @RequestParam(value = "parent_plant_three", required = false) String parent_plant_three,
                              @RequestParam(value = "feelings", required = false) String feelings,
                              @RequestParam(value = "tastes", required = false) String tastes,
                              @RequestParam("thcLevel") Double thcLevel,
-                             @RequestParam(value = "cbdLevel", required = false) Double cbdLevel,
-                             @RequestParam(value = "cbgLevel", required = false) Double cbgLevel,
+                             @RequestParam(value = "cbdLevel", required = false) String cbdLevel,
                              @RequestParam(value = "sativaLevel", required = false) Integer sativaLevel,
                              @RequestParam(value = "indicaLevel", required = false) Integer indicaLevel,
                              @RequestParam(value = "ruderalisLevel", required = false) Integer ruderalisLevel,
@@ -76,9 +77,12 @@ public class StrainController {
             strain.setTastes(tastesList);
 
             // Set the numerical values in the Strain entity
+            strain.setDescription(description);
+            strain.setParent_plant_one(parent_plant_one);
+            strain.setParent_plant_two(parent_plant_two);
+            strain.setParent_plant_three(parent_plant_three);
             strain.setThcLevel(thcLevel);
             strain.setCbdLevel(cbdLevel);
-            strain.setCbgLevel(cbgLevel);
             strain.setSativaLevel(sativaLevel);
             strain.setIndicaLevel(indicaLevel);
             strain.setRuderalisLevel(ruderalisLevel);
