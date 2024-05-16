@@ -30,120 +30,333 @@
             background-color: #198754;
             border-color: #198754;
         }
+
+        .dark-modal {
+            background-color: #343a40;
+            color: #fff;
+            border-color: #495057;
+        }
+
+        .dark-modal .modal-header,
+        .dark-modal .modal-footer {
+            border-color: #495057;
+        }
+
+        .dark-modal .btn-close {
+            color: #fff;
+        }
+
+        .dark-modal .form-check-label {
+            color: #fff;
+        }
+
+        .dark-modal .form-check-input {
+            border-color: #fff;
+            background-color: #495057;
+        }
+
+        .dark-modal .form-check-input:checked {
+            background-color: #198754;
+            border-color: #198754;
+        }
     </style>
 </head>
 <body>
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 <div class="container py-5">
     <h1 class="mb-4">Add New Strain</h1>
-    <form th:action="@{/strains/add}" th:object="${strain}" method="post" class="rounded p-4 bg-dark" enctype="multipart/form-data">
-        <!-- Your form fields here -->
-
-        <!--
-        <div class="mb-3">
-            <label for="image" class="form-label">Image</label>
-            <input type="file" class="form-control" id="image" name="image">
-        </div>
-        -->
+    <form th:action="@{/strains/add}" th:object="${strain}" method="post" class="rounded p-4 bg-dark"
+          enctype="multipart/form-data">
 
         <div class="mb-3">
             <label for="name" class="form-label required">Name</label>
             <input type="text" class="form-control" id="name" th:field="*{name}" required>
         </div>
         <div class="mb-3">
-            <label for="aliases" class="form-label">Aliases</label>
+            <label for="aliases" class="form-label">Aliases (separated by comma)</label>
             <input type="text" class="form-control" id="aliases" th:field="*{aliases}">
         </div>
 
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="growType" class="form-label required">Grow Type</label>
-                <input type="text" class="form-control" id="growType" th:field="*{growType}" required>
+                <select class="form-select form-control" id="growType" th:field="*{growType}" required>
+                    <option value="">Select Grow Type</option>
+                    <option value="Autoflower">Autoflower</option>
+                    <option value="Photoperiod">Photoperiod</option>
+                </select>
+                <div class="invalid-feedback">
+                    Please select a valid grow type.
+                </div>
             </div>
+
             <div class="col-md-6 mb-3">
                 <label for="strainType" class="form-label required">Strain Type</label>
-                <input type="text" class="form-control" id="strainType" th:field="*{strainType}" required>
+                <select class="form-select form-control" id="strainType" th:field="*{strainType}" required>
+                    <option value="">Select Strain Type</option>
+                    <option value="Hybrid">Hybrid</option>
+                    <option value="Sativa">Sativa</option>
+                    <option value="Indica">Indica</option>
+                </select>
+                <div class="invalid-feedback">
+                    Please select a valid strain type.
+                </div>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-4 mb-3">
                 <label for="thcLevel" class="form-label required">THC Level in %</label>
-                <input type="number" step="0.1" class="form-control" id="thcLevel" name="thcLevel" required>
+                <input type="number" step="0.1" class="form-control" id="thcLevel" name="thcLevel" min="0" max="100" required>
             </div>
             <div class="col-md-4 mb-3">
                 <label for="cbdLevel" class="form-label">CBD Level in %</label>
-                <input type="number" step="0.1" class="form-control" id="cbdLevel" name="cbdLevel">
+                <input type="number" step="0.1" class="form-control" id="cbdLevel" name="cbdLevel" min="0" max="100">
             </div>
             <div class="col-md-4 mb-3">
                 <label for="cbgLevel" class="form-label">CBG Level in %</label>
-                <input type="number" step="0.1" class="form-control" id="cbgLevel" name="cbgLevel">
+                <input type="number" step="0.1" class="form-control" id="cbgLevel" name="cbgLevel" min="0" max="100">
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-4 mb-3">
                 <label for="sativaLevel" class="form-label">Sativa Level</label>
-                <input type="number" class="form-control" id="sativaLevel" name="sativaLevel">
+                <input type="number" class="form-control" id="sativaLevel" name="sativaLevel" min="0" max="100">
             </div>
             <div class="col-md-4 mb-3">
                 <label for="indicaLevel" class="form-label">Indica Level</label>
-                <input type="number" class="form-control" id="indicaLevel" name="indicaLevel">
+                <input type="number" class="form-control" id="indicaLevel" name="indicaLevel" min="0" max="100">
             </div>
             <div class="col-md-4 mb-3">
                 <label for="ruderalisLevel" class="form-label">Ruderalis Level</label>
-                <input type="number" class="form-control" id="ruderalisLevel" name="ruderalisLevel">
+                <input type="number" class="form-control" id="ruderalisLevel" name="ruderalisLevel" min="0" max="100">
             </div>
         </div>
 
         <div class="mb-3">
             <label for="feelings" class="form-label">Feelings</label>
-            <input type="text" class="form-control" id="feelings" th:field="*{feelings}">
+            <div class="input-group">
+                <input type="text" class="form-control" id="feelings" th:field="*{feelings}">
+                <button type="button" class="btn btn-outline-secondary" id="clearFeelings">X</button>
+            </div>
         </div>
+
         <div class="mb-3">
-            <label for="feelings" class="form-label">Tastes</label>
-            <input type="text" class="form-control" id="tastes" th:field="*{tastes}">
+            <label for="tastes" class="form-label">Tastes</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="tastes" th:field="*{tastes}">
+                <button type="button" class="btn btn-outline-secondary" id="clearTastes">X</button>
+            </div>
         </div>
 
         <div class="row">
+
             <div class="col-md-6 mb-3">
                 <label for="seedOrigin" class="form-label required">Seed Origin</label>
-                <input type="text" class="form-control" id="seedOrigin" th:field="*{seedOrigin}" required>
+                <select class="form-select form-control" id="seedOrigin" th:field="*{seedOrigin}" required>
+                    <option value="">Select Seed Origin</option>
+                    <option value="Royal Queen Seeds">Royal Queen Seeds</option>
+                    <option value="2Fast4Buds">2Fast4Buds</option>
+                    <option value="Bushplanet">Bushplanet</option>
+                    <option value="Sensi Seeds">Sensi Seeds</option>
+                </select>
+                <div class="invalid-feedback">
+                    Please select a valid seed origin.
+                </div>
             </div>
+
             <div class="col-md-6 mb-3">
                 <label for="pricePerSeed" class="form-label required">Price Per Seed in €</label>
-                <input type="number" class="form-control" id="pricePerSeed" th:field="*{pricePerSeed}" required>
+                <input type="number" class="form-control" id="pricePerSeed" min="0" th:field="*{pricePerSeed}" required>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="floweringPhaseMin" class="form-label">Flowering Phase Min</label>
-                <input type="number" class="form-control" id="floweringPhaseMin" name="floweringPhaseMin">
+                <input type="number" class="form-control" id="floweringPhaseMin" name="floweringPhaseMin" min="0">
             </div>
             <div class="col-md-6 mb-3">
                 <label for="floweringPhaseMax" class="form-label">Flowering Phase Max</label>
-                <input type="number" class="form-control" id="floweringPhaseMax" name="floweringPhaseMax">
+                <input type="number" class="form-control" id="floweringPhaseMax" name="floweringPhaseMax" min="0">
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-3 mb-3">
                 <label for="seedToHarvestMin" class="form-label">Seed To Harvest Min</label>
-                <input type="number" class="form-control" id="seedToHarvestMin" name="seedToHarvestMin">
+                <input type="number" class="form-control" id="seedToHarvestMin" name="seedToHarvestMin" min="0">
             </div>
             <div class="col-md-3 mb-3">
                 <label for="seedToHarvestMax" class="form-label">Seed To Harvest Max</label>
-                <input type="number" class="form-control" id="seedToHarvestMax" name="seedToHarvestMax">
+                <input type="number" class="form-control" id="seedToHarvestMax" name="seedToHarvestMax" min="0">
             </div>
 
             <div class="col-md-3 mb-3">
                 <label for="indoorYieldMin" class="form-label">Indoor Yield Min</label>
-                <input type="number" class="form-control" id="indoorYieldMin" name="indoorYieldMin">
+                <input type="number" class="form-control" id="indoorYieldMin" name="indoorYieldMin" min="0">
             </div>
             <div class="col-md-3 mb-3">
                 <label for="indoorYieldMax" class="form-label">Indoor Yield Max</label>
-                <input type="number" class="form-control" id="indoorYieldMax" name="indoorYieldMax">
+                <input type="number" class="form-control" id="indoorYieldMax" name="indoorYieldMax" min="0">
+            </div>
+        </div>
+
+        <!-- Popup window for feelings -->
+        <div class="modal fade" id="feelingsModal" tabindex="-1" aria-labelledby="feelingsModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content dark-modal">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="feelingsModalLabel">Select Feelings</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Aroused" id="aroused">
+                            <label class="form-check-label" for="aroused">Aroused</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Creative" id="creative">
+                            <label class="form-check-label" for="creative">Creative</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Energetic" id="energetic">
+                            <label class="form-check-label" for="energetic">Energetic</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Euphoric" id="euphoric">
+                            <label class="form-check-label" for="euphoric">Euphoric</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Focused" id="focused">
+                            <label class="form-check-label" for="focused">Focused</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Giggly" id="giggly">
+                            <label class="form-check-label" for="giggly">Giggly</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Happy" id="happy">
+                            <label class="form-check-label" for="happy">Happy</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Hungry" id="hungry">
+                            <label class="form-check-label" for="hungry">Hungry</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Relaxed" id="relaxed">
+                            <label class="form-check-label" for="relaxed">Relaxed</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Sleepy" id="sleepy">
+                            <label class="form-check-label" for="sleepy">Sleepy</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Talkative" id="talkative">
+                            <label class="form-check-label" for="talkative">Talkative</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Tingly" id="tingly">
+                            <label class="form-check-label" for="tingly">Tingly</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Uplifting" id="uplifting">
+                            <label class="form-check-label" for="uplifting">Uplifted</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="confirmSelection">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Popup window for tastes -->
+        <div class="modal fade" id="tastesModal" tabindex="-1" aria-labelledby="tastesModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content dark-modal">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="tastesModalLabel">Select Tastes</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Earthy" id="earthy">
+                            <label class="form-check-label" for="earthy">Earthy</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Pine" id="pine">
+                            <label class="form-check-label" for="pine">Pine</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Pineapple" id="pineapple">
+                            <label class="form-check-label" for="pineapple">Pineapple</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Herbal" id="herbal">
+                            <label class="form-check-label" for="herbal">Herbal</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Pepper" id="pepper">
+                            <label class="form-check-label" for="pepper">Pepper</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Candy" id="candy">
+                            <label class="form-check-label" for="candy">Candy</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Fruity" id="fruity">
+                            <label class="form-check-label" for="fruity">Fruity</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Diesel" id="diesel">
+                            <label class="form-check-label" for="diesel">Diesel</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Sour" id="sour">
+                            <label class="form-check-label" for="sour">Sour</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Pungent" id="pungent">
+                            <label class="form-check-label" for="pungent">Pungent</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Mint" id="mint">
+                            <label class="form-check-label" for="mint">Mint</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Blueberry" id="blueberry">
+                            <label class="form-check-label" for="blueberry">Blueberry</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Skunk" id="skunk">
+                            <label class="form-check-label" for="skunk">Skunk</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Honey" id="honey">
+                            <label class="form-check-label" for="honey">Honey</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Lime" id="lime">
+                            <label class="form-check-label" for="lime">Lime</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Lemon" id="lemon">
+                            <label class="form-check-label" for="lemon">Lemon</label>
+                        </div>
+                        <div class="form-check custom-checkbox">
+                            <input class="form-check-input" type="checkbox" value="Cookies" id="cookies">
+                            <label class="form-check-label" for="cookies">Cookies</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="confirmTastesSelection">Confirm</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -155,5 +368,55 @@
 <div th:replace="~{fragments/footer :: footer}"></div>
 <!-- Include Bootstrap JS and its dependencies below -->
 <script src="/static/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    document.querySelectorAll('.dropdown-menu a').forEach(item => {
+        item.addEventListener('click', function () {
+            const button = this.closest('.dropdown').querySelector('.dropdown-toggle');
+            const input = document.getElementById(button.id + 'Value');
+            button.textContent = this.textContent;
+            input.value = this.textContent;
+        });
+    });
+
+    document.getElementById('feelings').addEventListener('click', function () {
+        var myModal = new bootstrap.Modal(document.getElementById('feelingsModal'), {});
+        myModal.show();
+    });
+
+    document.getElementById('confirmSelection').addEventListener('click', function () {
+        var selectedFeelings = [];
+        document.querySelectorAll('#feelingsModal .form-check-input:checked').forEach(function (checkbox) {
+            selectedFeelings.push(checkbox.value);
+        });
+        document.getElementById('feelings').value = selectedFeelings.join(', ');
+        var myModal = bootstrap.Modal.getInstance(document.getElementById('feelingsModal'));
+        myModal.hide();
+    });
+
+    document.getElementById('clearFeelings').addEventListener('click', function () {
+        document.getElementById('feelings').value = '';
+    });
+
+    document.getElementById('tastes').addEventListener('click', function () {
+        var myModal = new bootstrap.Modal(document.getElementById('tastesModal'), {});
+        myModal.show();
+    });
+
+    document.getElementById('confirmTastesSelection').addEventListener('click', function () {
+        var selectedTastes = [];
+        document.querySelectorAll('#tastesModal .form-check-input:checked').forEach(function (checkbox) {
+            selectedTastes.push(checkbox.value);
+        });
+        document.getElementById('tastes').value = selectedTastes.join(', ');
+        var myModal = bootstrap.Modal.getInstance(document.getElementById('tastesModal'));
+        myModal.hide();
+    });
+
+    document.getElementById('clearTastes').addEventListener('click', function () {
+        document.getElementById('tastes').value = '';
+    });
+</script>
+
 </body>
 </html>
