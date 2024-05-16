@@ -13,9 +13,10 @@ import java.util.List;
 @AllArgsConstructor
 public class Strain {
 
-    public Strain(String name, List<String> aliases, String growType, String strainType, int thcLevel, int cbdLevel,
-                  int cbgLevel, int sativaLevel, int indicaLevel, int ruderalisLevel, List<String> feelings,
-                  String seedOrigin, int pricePerSeed, int[] floweringPhase, int[] seedToHarvest, int[] indoorYield) {
+    public Strain(String name, List<String> aliases, String growType, String strainType, Double thcLevel, Double cbdLevel,
+                  Double cbgLevel, Integer sativaLevel, Integer indicaLevel, Integer ruderalisLevel, List<String> feelings, List<String> tastes,
+                  String seedOrigin, Integer pricePerSeed, Integer floweringPhaseMin, Integer floweringPhaseMax, Integer seedToHarvestMin,
+                  Integer seedToHarvestMax, Integer indoorYieldMin, Integer indoorYieldMax) {
         this.name = name;
         this.aliases = aliases;
         this.growType = growType;
@@ -27,11 +28,15 @@ public class Strain {
         this.indicaLevel = indicaLevel;
         this.ruderalisLevel = ruderalisLevel;
         this.feelings = feelings;
+        this.tastes = tastes;
         this.seedOrigin = seedOrigin;
         this.pricePerSeed = pricePerSeed;
-        this.floweringPhase = floweringPhase;
-        this.seedToHarvest = seedToHarvest;
-        this.indoorYield = indoorYield;
+        this.floweringPhaseMin = floweringPhaseMin;
+        this.floweringPhaseMax = floweringPhaseMax;
+        this.seedToHarvestMin = seedToHarvestMin;
+        this.seedToHarvestMax = seedToHarvestMax;
+        this.indoorYieldMin = indoorYieldMin;
+        this.indoorYieldMax = indoorYieldMax;
     }
 
     @Id
@@ -42,7 +47,7 @@ public class Strain {
     @Column(name = "name", nullable = false)
     private String name; // Name of Strain
 
-    @Column(name = "aliases", nullable = false)
+    @Column(name = "aliases")
     private List<String> aliases; // Other names
 
     @Column(name = "grow_type", nullable = false)
@@ -52,43 +57,56 @@ public class Strain {
     private String strainType; // Sativa, Indica or Hybrid
 
     @Column(name = "thc_level", nullable = false)
-    private int thcLevel; // level of thc as percentage
+    private Double thcLevel; // level of thc as percentage
 
     @Column(name = "cbd_level")
-    private int cbdLevel; // level of cbd as percentage
+    private Double cbdLevel; // level of cbd as percentage
 
     @Column(name = "cbg_level")
-    private int cbgLevel; // level of cbg as percentage
+    private Double cbgLevel; // level of cbg as percentage
 
     @Column(name = "sativa_level")
-    private int sativaLevel; // level of sativa as percentage
+    private Integer sativaLevel; // level of sativa as percentage
 
     @Column(name = "indica_level")
-    private int indicaLevel; // level of indica as percentage
+    private Integer indicaLevel; // level of indica as percentage
 
     @Column(name = "ruderalis_level")
-    private int ruderalisLevel; // level of ruderalis as percentage
+    private Integer ruderalisLevel; // level of ruderalis as percentage
 
     @Column(name = "feelings")
     private List<String> feelings; // list of feeling associated with the strain
 
+    @Column(name = "tastes")
+    private List<String> tastes; // list of feeling associated with the strain
+
     @Column(name = "seed_origin", nullable = false)
-    private String seedOrigin; ; // website name or link
+    private String seedOrigin;// website name or link
 
     @Column(name = "price_per_seed", nullable = false)
-    private int pricePerSeed; //
+    private Integer pricePerSeed; //
 
-    @Column(name = "flowering_phase", nullable = false)
-    private int[] floweringPhase; //
+    @Column(name = "flowering_phase_min")
+    private Integer floweringPhaseMin; //
 
-    @Column(name = "seed_to_harvest", nullable = false)
-    private int[] seedToHarvest; ; //
+    @Column(name = "flowering_phase_max")
+    private Integer floweringPhaseMax; //
 
-    @Column(name = "indoor_yield", nullable = false)
-    private int[] indoorYield; //
+    @Column(name = "seed_to_harvest_min")
+    private Integer seedToHarvestMin;
 
+    @Column(name = "seed_to_harvest_max")
+    private Integer seedToHarvestMax;
 
+    @Column(name = "indoor_yield_min")
+    private Integer indoorYieldMin; //
 
+    @Column(name = "indoor_yield_max")
+    private Integer indoorYieldMax; //
 
-
+    /*
+    @Lob
+    @Column(name = "image")
+    private byte[] image;
+     */
 }

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add New Strain</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <style>
+        body {
+            background-color: #343a40;
+            color: #fff;
+        }
+
+        .required::after {
+            content: " *";
+            color: red;
+        }
+
+        .form-control {
+            background-color: #495057;
+            border-color: #495057;
+            color: #fff;
+        }
+
+        .form-control:focus {
+            background-color: #495057;
+            border-color: #80bdff;
+            color: #fff;
+        }
+
+        .btn-success {
+            background-color: #198754;
+            border-color: #198754;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<div class="container py-5">
+    <h1 class="mb-4">Add New Strain</h1>
+    <form th:action="@{/strains/add}" th:object="${strain}" method="post" class="rounded p-4 bg-dark" enctype="multipart/form-data">
+        <!-- Your form fields here -->
+
+        <!--
+        <div class="mb-3">
+            <label for="image" class="form-label">Image</label>
+            <input type="file" class="form-control" id="image" name="image">
+        </div>
+        -->
+
+        <div class="mb-3">
+            <label for="name" class="form-label required">Name</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}" required>
+        </div>
+        <div class="mb-3">
+            <label for="aliases" class="form-label">Aliases</label>
+            <input type="text" class="form-control" id="aliases" th:field="*{aliases}">
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="growType" class="form-label required">Grow Type</label>
+                <input type="text" class="form-control" id="growType" th:field="*{growType}" required>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="strainType" class="form-label required">Strain Type</label>
+                <input type="text" class="form-control" id="strainType" th:field="*{strainType}" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="thcLevel" class="form-label required">THC Level in %</label>
+                <input type="number" step="0.1" class="form-control" id="thcLevel" name="thcLevel" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="cbdLevel" class="form-label">CBD Level in %</label>
+                <input type="number" step="0.1" class="form-control" id="cbdLevel" name="cbdLevel">
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="cbgLevel" class="form-label">CBG Level in %</label>
+                <input type="number" step="0.1" class="form-control" id="cbgLevel" name="cbgLevel">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="sativaLevel" class="form-label">Sativa Level</label>
+                <input type="number" class="form-control" id="sativaLevel" name="sativaLevel">
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="indicaLevel" class="form-label">Indica Level</label>
+                <input type="number" class="form-control" id="indicaLevel" name="indicaLevel">
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="ruderalisLevel" class="form-label">Ruderalis Level</label>
+                <input type="number" class="form-control" id="ruderalisLevel" name="ruderalisLevel">
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="feelings" class="form-label">Feelings</label>
+            <input type="text" class="form-control" id="feelings" th:field="*{feelings}">
+        </div>
+        <div class="mb-3">
+            <label for="feelings" class="form-label">Tastes</label>
+            <input type="text" class="form-control" id="tastes" th:field="*{tastes}">
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="seedOrigin" class="form-label required">Seed Origin</label>
+                <input type="text" class="form-control" id="seedOrigin" th:field="*{seedOrigin}" required>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="pricePerSeed" class="form-label required">Price Per Seed in €</label>
+                <input type="number" class="form-control" id="pricePerSeed" th:field="*{pricePerSeed}" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="floweringPhaseMin" class="form-label">Flowering Phase Min</label>
+                <input type="number" class="form-control" id="floweringPhaseMin" name="floweringPhaseMin">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="floweringPhaseMax" class="form-label">Flowering Phase Max</label>
+                <input type="number" class="form-control" id="floweringPhaseMax" name="floweringPhaseMax">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <label for="seedToHarvestMin" class="form-label">Seed To Harvest Min</label>
+                <input type="number" class="form-control" id="seedToHarvestMin" name="seedToHarvestMin">
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="seedToHarvestMax" class="form-label">Seed To Harvest Max</label>
+                <input type="number" class="form-control" id="seedToHarvestMax" name="seedToHarvestMax">
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label for="indoorYieldMin" class="form-label">Indoor Yield Min</label>
+                <input type="number" class="form-control" id="indoorYieldMin" name="indoorYieldMin">
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="indoorYieldMax" class="form-label">Indoor Yield Max</label>
+                <input type="number" class="form-control" id="indoorYieldMax" name="indoorYieldMax">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success float-end">Submit</button>
+        <p class="mt-2"><span class="required"></span> indicates a required field</p>
+    </form>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+<!-- Include Bootstrap JS and its dependencies below -->
+<script src="/static/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

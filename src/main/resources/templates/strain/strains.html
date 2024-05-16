@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Strains</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <script>
+        var editMode = false;
+
+        function toggleEditMode() {
+            editMode = !editMode;
+            var buttons = document.getElementsByClassName('edit-button');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].style.display = editMode ? 'inline' : 'none';
+            }
+        }
+
+        function rowClicked(id) {
+            if (!editMode) {
+                window.location.href = '/strains/details/' + id;
+            }
+        }
+    </script>
+</head>
+<body class="bg-dark text-white">
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<div class="container mt-5">
+    <h1>Strains</h1>
+    <button onclick="toggleEditMode()" class="btn btn-primary">Toggle Edit Mode</button>
+    <table class="table table-dark table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Grow Type</th>
+            <th>Strain Type</th>
+            <th>THC Level</th>
+            <th>Seed Origin</th>
+            <th>Indoor Yield Min</th>
+            <th>Indoor Yield Max</th>
+            <th class="edit-button" style="display: none;">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="strain : ${strains}" onclick="rowClicked(${strain.id})">
+            <td th:text="${strain.name}"></td>
+            <td th:text="${strain.growType}"></td>
+            <td th:text="${strain.strainType}"></td>
+            <td th:text="${strain.thcLevel}"></td>
+            <td th:text="${strain.seedOrigin}"></td>
+            <td th:text="${strain.indoorYieldMin}"></td>
+            <td th:text="${strain.indoorYieldMax}"></td>
+            <td class="edit-button" style="display: none;">
+                <a th:href="@{/strains/edit/{id}(id=${strain.id})}" class="btn btn-primary">Edit</a>
+                <a th:href="@{/strains/delete/{id}(id=${strain.id})}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="/strains/add" class="btn btn-success">Add New Strain</a>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+<!-- Include Bootstrap JS and its dependencies below -->
+<script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
