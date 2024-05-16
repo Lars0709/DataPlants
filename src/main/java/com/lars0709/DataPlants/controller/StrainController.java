@@ -10,6 +10,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.ui.ModelMap;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ public class StrainController {
 
     @PostMapping("/strains/add")
     public String saveStrain(@ModelAttribute Strain strain,
+                             @RequestParam(value = "imageUrl", required = false) String imageUrl,
                              @RequestParam(value = "description", required = false) String description,
                              @RequestParam(value = "aliases", required = false) String aliases,
                              @RequestParam(value = "parent_plant_one", required = false) String parent_plant_one,
@@ -77,6 +79,7 @@ public class StrainController {
             strain.setTastes(tastesList);
 
             // Set the numerical values in the Strain entity
+            strain.setImageUrl(imageUrl);
             strain.setDescription(description);
             strain.setParent_plant_one(parent_plant_one);
             strain.setParent_plant_two(parent_plant_two);
@@ -92,6 +95,7 @@ public class StrainController {
             strain.setSeedToHarvestMax(seedToHarvestMax);
             strain.setIndoorYieldMin(indoorYieldMin);
             strain.setIndoorYieldMax(indoorYieldMax);
+
 
             // Save the Strain entity
             strainService.saveStrain(strain);

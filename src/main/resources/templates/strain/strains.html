@@ -11,6 +11,11 @@
             background-color: #343a40;
             color: #fff;
         }
+        .card-img-top {
+            width: 100%; /* This will make the image take the full width of the card */
+            height: 200px; /* Adjust as needed */
+            object-fit: cover; /* This will make the image cover the whole area of the div without stretching */
+        }
     </style>
 </head>
 
@@ -26,9 +31,12 @@
             <a th:href="@{'/strains/' + ${strain.id}}" class="text-decoration-none text-reset">
                 <div class="card h-100 bg-dark custom-card text-white">
                     <!-- You can add an image here if you have one -->
+                    <img th:src="${strain.imageUrl}" class="card-img-top" alt="Strain Image">
+
                     <div class="card-body">
                         <h5 class="card-title" th:text="${strain.name}"></h5>
-                        <p class="card-text" th:text="${strain.description.length() > 140 ? #strings.substring(strain.description, 0, 140) + '...' : strain.description}"></p>                    </div>
+                        <p class="card-text" th:text="${strain.description != null ? (strain.description.length() > 140 ? #strings.substring(strain.description, 0, 140) + '...' : strain.description) : ''}"></p>
+                    </div>
 
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item custom-card bg-dark text-white"
