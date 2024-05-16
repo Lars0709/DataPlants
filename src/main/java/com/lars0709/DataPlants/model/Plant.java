@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 
@@ -14,11 +15,16 @@ import java.time.LocalDate;
 public class Plant {
 
     public Plant(LocalDate startOfGerminationStage, LocalDate startOfSeedlingStage,
-                 LocalDate startOfVegetativeStage, LocalDate startOfFloweringStage){
+                 LocalDate startOfVegetativeStage, LocalDate startOfFloweringStage, LocalDate harvestDate,
+                 LocalDate startDryingDate, LocalDate startCuringDate, LocalDate harvestWeight){
         this.startOfGerminationStage = startOfGerminationStage;
         this.startOfSeedlingStage = startOfSeedlingStage;
         this.startOfVegetativeStage = startOfVegetativeStage;
         this.startOfFloweringStage = startOfFloweringStage;
+        this.harvestDate = harvestDate;
+        this.startDryingDate = startDryingDate;
+        this.startCuringDate = startCuringDate;
+        this.harvestWeight = harvestWeight;
     }
 
     @Id
@@ -44,10 +50,14 @@ public class Plant {
     @Column(name = "harvest_date")
     private LocalDate harvestDate;
 
+    @Column(name = "start_drying_date")
+    private LocalDate startDryingDate;
+
+    @Column(name = "start_curing_date")
+    private LocalDate startCuringDate;
+
     @Column(name = "harvest_weight")
     private LocalDate harvestWeight;
-
-
 
     // Other fields and relationships...
 }

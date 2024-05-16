@@ -13,10 +13,20 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class DailyPlantUpdate {
 
-    public DailyPlantUpdate (Plant plant, LocalDate entryDate) {
+    public DailyPlantUpdate(Plant plant, LocalDate entryDate, int week, int day, String water, String nutrients,
+                            String stage, String comment, String problem, byte[] imageData) {
         this.plant = plant;
         this.entryDate = entryDate;
+        this.week = week;
+        this.day = day;
+        this.water = water;
+        this.nutrients = nutrients;
+        this.stage = stage;
+        this.comment = comment;
+        this.problem = problem;
+        this.imageData = imageData;
     }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +39,31 @@ public class DailyPlantUpdate {
     @Column(name = "entry_date", nullable = false)
     private LocalDate entryDate;
 
+    @Column(name = "week", nullable = false)
+    private int week;
+
+    @Column(name = "day", nullable = false)
+    private int day;
+
+    @Column(name = "water", nullable = false)
+    private String water;
+
+    @Column(name = "nutrients", nullable = false)
+    private String nutrients;
+
+    @Column(name = "stage", nullable = false)
+    private String stage;
+
+    @Column(name = "comment", nullable = false)
+    private String comment;
+
+    @Column(name = "problem", nullable = false)
+    private String problem;
+
+    // Define field to store image data
+    @Lob
+    @Column(name = "image_data")
+    private byte[] imageData;
 
     // Other fields and relationships...
 }
