@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Plant Details</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <style>
+        body {
+            background-color: #343a40;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container py-5">
+    <h1 class="mb-4" th:text="${plant.strain.name}"></h1>
+    <p><strong>Start of Germination Stage:</strong> <span th:text="${plant.startOfGerminationStage}"></span></p>
+    <p><strong>Start of Seedling Stage:</strong> <span th:text="${plant.startOfSeedlingStage}"></span></p>
+    <p><strong>Start of Vegetative Stage:</strong> <span th:text="${plant.startOfVegetativeStage}"></span></p>
+    <p><strong>Start of Flowering Stage:</strong> <span th:text="${plant.startOfFloweringStage}"></span></p>
+    <p><strong>Harvest Date:</strong> <span th:text="${plant.harvestDate}"></span></p>
+    <p><strong>Start of Drying Date:</strong> <span th:text="${plant.startDryingDate}"></span></p>
+    <p><strong>Start of Curing Date:</strong> <span th:text="${plant.startCuringDate}"></span></p>
+    <p><strong>Harvest Weight:</strong> <span th:text="${plant.harvestWeight}"></span></p>
+    <a th:href="@{'/plants/edit/' + ${plant.id}}" class="btn btn-primary">Edit</a>
+
+</div>
+
+<!-- Include Bootstrap JS and its dependencies below -->
+<script src="/static/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

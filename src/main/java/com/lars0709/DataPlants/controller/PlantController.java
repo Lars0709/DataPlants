@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Optional;
 
 @Controller
 public class PlantController {
@@ -36,6 +40,18 @@ public class PlantController {
         ModelAndView modelAndView = new ModelAndView("plant/plants");
         modelAndView.addObject("plants", plantService.getAllPlants());
         return modelAndView;
+    }
+
+    @GetMapping("/plants/{id}")
+    public String getPlant(@PathVariable Long id, Model model) {
+        Optional<Plant> optionalPlant = plantService.getPlantById(id);
+        if(optionalPlant.isPresent()) {
+            model.addAttribute("plant", optionalPlant.get());
+            return "plant/plant-details";
+        } else {
+            // handle case when plant is not found
+            return "error/error404";
+        }
     }
 
     @GetMapping("/plants/add")
@@ -73,6 +89,37 @@ public class PlantController {
 
         } catch (NumberFormatException e) {
             e.printStackTrace();
+        }
+        return "redirect:/plants";
+    }
+
+    @GetMapping("/plants/edit/{id}")
+    public String editPlant(@PathVariable Long id, Model model) {
+        Optional<Plant> optionalPlant = plantService.getPlantById(id);
+        if(optionalPlant.isPresent()) {
+            Plant plant = optionalPlant.get();
+            model.addAttribute("plant", plant);
+            model.addAttribute("strains", strainService.getAllStrains());
+            return "plant/edit-plant";
+        } else {
+            return "redirect:/plants";
+        }
+    }
+
+    @PostMapping("/plants/edit/{id}")
+    public String updatePlant(@PathVariable Long id, @ModelAttribute Plant plant) {
+        Optional<Plant> optionalPlant = plantService.getPlantById(id);
+        if(optionalPlant.isPresent()) {
+            Plant existingPlant = optionalPlant.get();
+            existingPlant.setStartOfGerminationStage(plant.getStartOfGerminationStage());
+            existingPlant.setStartOfSeedlingStage(plant.getStartOfSeedlingStage());
+            existingPlant.setStartOfVegetativeStage(plant.getStartOfVegetativeStage());
+            existingPlant.setStartOfFloweringStage(plant.getStartOfFloweringStage());
+            existingPlant.setHarvestDate(plant.getHarvestDate());
+            existingPlant.setStartDryingDate(plant.getStartDryingDate());
+            existingPlant.setStartCuringDate(plant.getStartCuringDate());
+            existingPlant.setHarvestWeight(plant.getHarvestWeight());
+            plantService.savePlant(existingPlant);
         }
         return "redirect:/plants";
     }

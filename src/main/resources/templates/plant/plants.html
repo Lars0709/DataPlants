@@ -34,7 +34,7 @@
                     <img th:src="${plant.strain.imageUrl}" class="card-img-top" alt="Strain Image">
 
                     <div class="card-body">
-                        <h5 class="card-title" th:text="${plant.strain.name}"></h5>
+                        <h5 class="card-title" th:text="${plant.strain.name + ' | ' + plant.startOfGerminationStage}"></h5>
                         <p class="card-text" th:text="${plant.strain.description != null ? (plant.strain.description.length() > 140 ? #strings.substring(plant.strain.description, 0, 140) + '...' : plant.strain.description) : ''}"></p>
                     </div>
 
