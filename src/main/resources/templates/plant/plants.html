@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Strains</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <style>
+        .custom-card {
+            border: 3px solid #424242;
+        }
+        body {
+            background-color: #343a40;
+            color: #fff;
+        }
+        .card-img-top {
+            width: 100%; /* This will make the image take the full width of the card */
+            height: 200px; /* Adjust as needed */
+            object-fit: cover; /* This will make the image cover the whole area of the div without stretching */
+        }
+    </style>
+</head>
+
+<body class="body text-white">
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<h1 class="text-center display-1 mt-4">Plants</h1>
+
+<div class="container mt-3">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col" th:each="plant : ${plants}">
+            <!-- Wrap the card inside an <a> tag -->
+            <a th:href="@{'/plants/' + ${plant.id}}" class="text-decoration-none text-reset">
+                <div class="card h-100 bg-dark custom-card text-white">
+                    <!-- You can add an image here if you have one-->
+                    <img th:src="${plant.strain.imageUrl}" class="card-img-top" alt="Strain Image">
+
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${plant.strain.name}"></h5>
+                        <p class="card-text" th:text="${plant.strain.description != null ? (plant.strain.description.length() > 140 ? #strings.substring(plant.strain.description, 0, 140) + '...' : plant.strain.description) : ''}"></p>
+                    </div>
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item custom-card bg-dark text-white"
+                            th:text="'Germination Start:  ' + ${plant.startOfGerminationStage}"></li>
+                        <li class="list-group-item custom-card bg-dark text-white"
+                            th:text="'Seedling Start:  ' + ${plant.startOfSeedlingStage}"></li>
+                        <li class="list-group-item custom-card bg-dark text-white"
+                            th:text="'Vegetative Start:  ' + ${plant.startOfVegetativeStage}"></li>
+                        <li class="list-group-item custom-card bg-dark text-white"
+                            th:text="'Flowering Start:  ' + ${plant.startOfFloweringStage}"></li>
+                    </ul>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center m-3">
+    <a href="/plants/add" class="btn btn-success col-md-3">Add New Plant</a>
+</div>
+
+<!-- Include Bootstrap JS and its dependencies below -->
+<script src="/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
