@@ -8,27 +8,88 @@
             background-color: #343a40;
             color: #fff;
         }
+
+        .strain-card {
+            border: none;
+            border-radius: 1rem;
+            background-color: #495057;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .strain-card h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .strain-card p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .strain-card .badge {
+            margin-right: 0.5rem;
+        }
+
     </style>
 </head>
 <body>
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-<div class="container py-5">
-    <h1 class="mb-4" th:text="${plant.strain.name}"></h1>
-    <p><strong>Start of Germination Stage:</strong> <span th:text="${plant.startOfGerminationStage}"></span></p>
-    <p><strong>Start of Seedling Stage:</strong> <span th:text="${plant.startOfSeedlingStage}"></span></p>
-    <p><strong>Start of Vegetative Stage:</strong> <span th:text="${plant.startOfVegetativeStage}"></span></p>
-    <p><strong>Start of Flowering Stage:</strong> <span th:text="${plant.startOfFloweringStage}"></span></p>
-    <p><strong>Harvest Date:</strong> <span th:text="${plant.harvestDate}"></span></p>
-    <p><strong>Start of Drying Date:</strong> <span th:text="${plant.startDryingDate}"></span></p>
-    <p><strong>Start of Curing Date:</strong> <span th:text="${plant.startCuringDate}"></span></p>
-    <p><strong>Harvest Weight:</strong> <span th:text="${plant.harvestWeight}"></span></p>
-    <a th:href="@{'/plants/edit/' + ${plant.id}}" class="btn btn-primary">Edit</a>
+<div class="container px-4 py-5" id="custom-cards">
+    <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
 
+        <!-- First Card: Title and Picture -->
+        <div class="col">
+            <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
+                 th:style="'background-image: url(' + ${plant.strain.imageUrl} + '); background-size: cover; background-position: center; background-repeat: no-repeat;'">
+                <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                    <h1 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold" th:text="${plant.strain.name}"></h1>
+                </div>
+            </div>
+        </div>
+
+        <!-- Second Card: Description, Title and Aliases -->
+        <div class="col">
+            <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
+                <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                    <h1 class="mb-4 display-6 lh-1 fw-bold" th:text="${plant.strain.name}"></h1>
+                    <p th:text="${#strings.arrayJoin(plant.strain.aliases, ', ')}"></p>
+                    <p th:text="${plant.strain.description}"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Third Card: All Other Information -->
+        <div class="col">
+            <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
+                <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                    <p><strong>Start of Germination Stage:</strong> <span
+                            th:text="${plant.startOfGerminationStage ?: '?'}"></span></p>
+                    <p><strong>Start of Seedling Stage:</strong> <span
+                            th:text="${plant.startOfSeedlingStage ?: '?'}"></span></p>
+                    <p><strong>Start of Vegetative Stage:</strong> <span
+                            th:text="${plant.startOfVegetativeStage ?: '?'}"></span></p>
+                    <p><strong>Start of Flowering Stage:</strong> <span
+                            th:text="${plant.startOfFloweringStage ?: '?'}"></span></p>
+                    <p><strong>Harvest Date:</strong> <span th:text="${plant.harvestDate ?: '?'}"></span></p>
+                    <p><strong>Start of Drying Date:</strong> <span th:text="${plant.startDryingDate ?: '?'}"></span>
+                    </p>
+                    <p><strong>Start of Curing Date:</strong> <span th:text="${plant.startCuringDate ?: '?'}"></span>
+                    </p>
+                    <p><strong>Harvest Weight:</strong> <span th:text="${plant.harvestWeight ?: '?'}"></span></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="text-center">
+    <a th:href="@{'/plants/edit/' + ${plant.id}}" class="btn btn-success" style="padding: .375rem 8rem;">Edit</a>
 </div>
 
-<!-- Include Bootstrap JS and its dependencies below -->
-<script src="/static/js/bootstrap.bundle.min.js"></script>
 
+<script th:src="@{/js/bootstrap.min.js}"></script>
 </body>
 </html>

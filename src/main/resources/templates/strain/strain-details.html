@@ -89,37 +89,7 @@
     <a th:href="@{'/strains/edit/' + ${strain.id}}" class="btn btn-primary">Edit</a>
 </div>
 
-<!--
-<div class="container py-5">
-    <div class="row">
-        <div class="col-md-8">
-            <div class="strain-card">
-                <h1 th:text="${strain.name}"></h1>
-                <p th:text="${#strings.arrayJoin(strain.aliases, ', ')}"></p>
-                <p th:text="${strain.description}"></p>
-                <p><strong>THC Level:</strong> <span th:text="${strain.thcLevel} + '%'"></span></p>
-                <p><strong>CBD Level:</strong> <span th:text="${strain.cbdLevel}"></span></p>
-                <p><strong>Grow Type:</strong> <span th:text="${strain.growType}"></span></p>
-                <p><strong>Strain Type:</strong> <span th:text="${strain.strainType}"></span></p>
-                <p><strong>Feelings:</strong> <span th:text="${strain.feelings}"></span></p>
-                <p><strong>Tastes:</strong> <span th:text="${strain.tastes}"></span></p>
-                <p><strong>Seed Origin:</strong> <span th:text="${strain.seedOrigin}"></span></p>
-                <p><strong>Price Per Seed:</strong> <span th:text="${strain.pricePerSeed}"></span> €</p>
-                <p><strong>Flowering Phase:</strong> <span
-                        th:text="${strain.floweringPhaseMin} + ' - ' + ${strain.floweringPhaseMax}"></span> weeks</p>
-                <p><strong>Seed to Harvest:</strong> <span
-                        th:text="${strain.seedToHarvestMin} + ' - ' + ${strain.seedToHarvestMax}"></span> weeks</p>
-                <p><strong>Indoor Yield:</strong> <span
-                        th:text="${strain.indoorYieldMin} + ' - ' + ${strain.indoorYieldMax}"></span> grams</p>
-                <a th:href="@{'/strains/edit/' + ${strain.id}}" class="btn btn-primary">Edit</a>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <img th:src="${strain.imageUrl}" alt="Strain Image" class="img-fluid rounded">
-        </div>
-    </div>
-</div>
--->
+
 
 <script th:src="@{/js/bootstrap.min.js}"></script>
 </body>
