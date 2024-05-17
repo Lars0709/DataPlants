@@ -8,22 +8,89 @@
             background-color: #343a40;
             color: #fff;
         }
+
+        .strain-card {
+            border: none;
+            border-radius: 1rem;
+            background-color: #495057;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .strain-card h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .strain-card p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .strain-card .badge {
+            margin-right: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: #198754;
+            border-color: #198754;
+            padding: .375rem 8rem;
+        }
     </style>
 </head>
 <body>
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-<div class="container py-5">
-    <h1 class="mb-4" th:text="${strain.name}"></h1>
-    <p><strong>Description:</strong> <span th:text="${strain.description}"></span></p>
-    <p><strong>THC Level:</strong> <span th:text="${strain.thcLevel}"></span></p>
-    <!-- Add more strain properties here -->
-    <a th:href="@{'/strains/edit/' + ${strain.id}}" class="btn btn-primary">Edit</a>
+<div class="container px-4 py-5" id="custom-cards">
+    <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+
+        <!-- First Card: Title and Picture -->
+        <div class="col">
+            <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" th:style="'background-image: url(' + ${strain.imageUrl} + '); background-size: cover; background-position: center; background-repeat: no-repeat;'">
+                <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                    <h1 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold" th:text="${strain.name}"></h1>
+                </div>
+            </div>
+        </div>
+
+        <!-- Second Card: Description, Title and Aliases -->
+        <div class="col">
+            <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
+                <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                    <h1 class="mb-4 display-6 lh-1 fw-bold" th:text="${strain.name}"></h1>
+                    <p th:text="${#strings.arrayJoin(strain.aliases, ', ')}"></p>
+                    <p th:text="${strain.description}"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Third Card: All Other Information -->
+        <div class="col">
+            <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
+                <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                    <p><strong>THC Level:</strong> <span th:text="${strain.thcLevel ?: '?'}"></span></p>
+                    <p><strong>CBD Level:</strong> <span th:text="${strain.cbdLevel ?: '?'}"></span></p>
+                    <p><strong>Grow Type:</strong> <span th:text="${strain.growType ?: '?'}"></span></p>
+                    <p><strong>Strain Type:</strong> <span th:text="${strain.strainType ?: '?'}"></span></p>
+                    <p><strong>Feelings:</strong> <span th:text="${#strings.arrayJoin(strain.feelings, ', ') ?: '?'}"></span></p>
+                    <p><strong>Tastes:</strong> <span th:text="${#strings.arrayJoin(strain.tastes, ', ') ?: '?'}"></span></p>
+                    <p><strong>Seed Origin:</strong> <span th:text="${strain.seedOrigin ?: '?'}"></span></p>
+                    <p><strong>Price Per Seed:</strong> <span th:text="${strain.pricePerSeed ?: '?'}"></span> €</p>
+                    <p><strong>Flowering Phase:</strong> <span th:text="${strain.floweringPhaseMin ?: '?'} + ' - ' + ${strain.floweringPhaseMax ?: '?'}"></span> weeks</p>
+                    <p><strong>Seed to Harvest:</strong> <span th:text="${strain.seedToHarvestMin ?: '?'} + ' - ' + ${strain.seedToHarvestMax ?: '?'}"></span> weeks</p>
+                    <p><strong>Indoor Yield:</strong> <span th:text="${strain.indoorYieldMin ?: '?'} + ' - ' + ${strain.indoorYieldMax ?: '?'}"></span> grams</p>
+                </div>
+            </div>
+        </div>
 
 </div>
+<div class="text-center">
+    <a th:href="@{'/strains/edit/' + ${strain.id}}" class="btn btn-primary">Edit</a>
+</div>
 
-<!-- Include Bootstrap JS and its dependencies below -->
-<script src="/static/js/bootstrap.bundle.min.js"></script>
 
+
+<script th:src="@{/js/bootstrap.min.js}"></script>
 </body>
 </html>
