@@ -2,7 +2,6 @@ package com.lars0709.DataPlants.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Type;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 

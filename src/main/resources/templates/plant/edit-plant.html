@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Plant</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <style>
+        body {
+            background-color: #343a40;
+            color: #fff;
+        }
+
+        .required::after {
+            content: " *";
+            color: red;
+        }
+
+        .form-control {
+            background-color: #495057;
+            border-color: #495057;
+            color: #fff;
+        }
+
+        .form-control:focus {
+            background-color: #495057;
+            border-color: #80bdff;
+            color: #fff;
+        }
+
+        .btn-success {
+            background-color: #198754;
+            border-color: #198754;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container py-5">
+    <h1 class="mb-4">Edit Plant</h1>
+    <form th:action="@{'/plants/edit/' + ${plant.id}}" th:object="${plant}" method="post" class="rounded p-4 bg-dark">
+
+
+        <div class="mb-3">
+            <label for="strain" class="form-label required">Strain</label>
+            <select class="form-select form-control" id="strain" th:field="*{strain.id}" required>
+                <option value="">Select Strain</option>
+                <option th:each="strain : ${strains}" th:value="${strain.id}" th:text="${strain.name}"
+                        th:selected="${strain.id == plant.strain.id}"></option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="startOfGerminationStage" class="form-label required">Start of Germination Stage</label>
+            <input type="date" class="form-control" id="startOfGerminationStage" th:field="*{startOfGerminationStage}" required>
+            <input type="hidden" id="startOfGerminationStageValue" th:value="${plant.startOfGerminationStage}">
+        </div>
+
+        <div class="mb-3">
+            <label for="startOfSeedlingStage" class="form-label">Start of Seedling Stage</label>
+            <input type="date" class="form-control" id="startOfSeedlingStage" th:field="*{startOfSeedlingStage}">
+            <input type="hidden" id="startOfSeedlingStageValue" th:value="${plant.startOfSeedlingStage}">
+        </div>
+
+        <div class="mb-3">
+            <label for="startOfVegetativeStage" class="form-label">Start of Vegetative Stage</label>
+            <input type="date" class="form-control" id="startOfVegetativeStage" th:field="*{startOfVegetativeStage}">
+            <input type="hidden" id="startOfVegetativeStageValue" th:value="${plant.startOfVegetativeStage}">
+        </div>
+
+        <div class="mb-3">
+            <label for="startOfFloweringStage" class="form-label">Start of Flowering Stage</label>
+            <input type="date" class="form-control" id="startOfFloweringStage" th:field="*{startOfFloweringStage}">
+            <input type="hidden" id="startOfFloweringStageValue" th:value="${plant.startOfFloweringStage}">
+        </div>
+
+        <div class="mb-3">
+            <label for="harvestDate" class="form-label">Harvest Date</label>
+            <input type="date" class="form-control" id="harvestDate" th:field="*{harvestDate}">
+            <input type="hidden" id="harvestDateValue" th:value="${plant.harvestDate}">
+        </div>
+
+        <div class="mb-3">
+            <label for="startDryingDate" class="form-label">Start of Drying Date</label>
+            <input type="date" class="form-control" id="startDryingDate" th:field="*{startDryingDate}">
+            <input type="hidden" id="startDryingDateValue" th:value="${plant.startDryingDate}">
+        </div>
+
+        <div class="mb-3">
+            <label for="startCuringDate" class="form-label">Start of Curing Date</label>
+            <input type="date" class="form-control" id="startCuringDate" th:field="*{startCuringDate}">
+            <input type="hidden" id="startCuringDateValue" th:value="${plant.startCuringDate}">
+        </div>
+
+        <div class="mb-3">
+            <label for="harvestWeight" class="form-label">Harvest Weight</label>
+            <input type="number" class="form-control" id="harvestWeight" th:field="*{harvestWeight}">
+        </div>
+
+        <button type="submit" class="btn btn-success float-end">Submit</button>
+        <p class="mt-2"><span class="required"></span> indicates a required field</p>
+
+    </form>
+</div>
+<!-- Include Bootstrap JS and its dependencies below -->
+<script src="/static/js/bootstrap.bundle.min.js"></script>
+<script>
+    window.onload = function() {
+        // Get the date value from the hidden input field
+        var startOfGerminationStageValue = document.getElementById('startOfGerminationStageValue').value;
+        var startOfSeedlingStageValue = document.getElementById('startOfSeedlingStageValue').value;
+        var startOfVegetativeStageValue = document.getElementById('startOfVegetativeStageValue').value;
+        var startOfFloweringStageValue = document.getElementById('startOfFloweringStageValue').value;
+        var harvestDateValue = document.getElementById('harvestDateValue').value;
+        var startDryingDateValue = document.getElementById('startDryingDateValue').value;
+        var startCuringDateValue = document.getElementById('startCuringDateValue').value;
+
+        // Set the value of the date input field
+        document.getElementById('startOfGerminationStage').value = startOfGerminationStageValue;
+        document.getElementById('startOfSeedlingStage').value = startOfSeedlingStageValue;
+        document.getElementById('startOfVegetativeStage').value = startOfVegetativeStageValue;
+        document.getElementById('startOfFloweringStage').value = startOfFloweringStageValue;
+        document.getElementById('harvestDate').value = harvestDateValue;
+        document.getElementById('startDryingDate').value = startDryingDateValue;
+        document.getElementById('startCuringDate').value = startCuringDateValue;
+    };
+</script>
+</body>
+</html>

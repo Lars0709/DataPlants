@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StrainService {
@@ -23,6 +24,10 @@ public class StrainService {
 
     public void saveStrain(Strain strain) {
         strainRepository.save(strain);
+    }
+
+    public Optional<Strain> getStrainById(Long id) {
+        return strainRepository.findById(id);
     }
 }
 

@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DataPlants</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <style>
+        body {
+            background-color: #343a40;
+            color: #fff;
+        }
+    </style>
 </head>
 
 <div th:replace="~{fragments/navBar :: navbar}"></div>
@@ -12,26 +18,22 @@
 <body>
 
 <div class="container my-5">
-    <div class="p-5 text-center bg-body-tertiary rounded-3">
+    <div class="p-5 text-center bg-body-tertiary rounded-3 rounded p-4 bg-dark">
         <h1 class="text-body-emphasis">DataPlants</h1>
         <p class="col-lg-8 mx-auto fs-5 text-muted">
             This Program is designed to track, analyze and evaluate the Plants you grow (WIP).
         </p>
         <div class="d-inline-flex gap-2 mb-5">
-            <a href="/newstrain" class="btn btn-success btn-lg px-4 rounded-pill" role="button">
-                Enter New Strain
+            <a href="/strains" class="btn btn-success btn-lg px-4 rounded-pill" role="button">
+                View Strains
             </a>
 
-            <a href="/newplant" class="btn btn-success btn-lg px-4 rounded-pill" role="button">
-                Add New Plant
-            </a>
-
-            <a href="/newupdate" class="btn btn-success btn-lg px-4 rounded-pill" role="button">
-                Insert Daily Update
+            <a href="/plants" class="btn btn-success btn-lg px-4 rounded-pill" role="button">
+                View Plants
             </a>
 
             <a href="/information" class="btn btn-success btn-lg px-4 rounded-pill" role="button">
-                Misc. Information
+                Add Daily Update
             </a>
         </div>
     </div>
@@ -41,7 +43,8 @@
 <script src="/static/js/bootstrap.bundle.min.js"></script>
 </body>
 
+<!--
 <div th:replace="~{fragments/footer :: footer}"></div>
-
+-->
 
 </html>

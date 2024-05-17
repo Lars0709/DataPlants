@@ -1,29 +1,32 @@
 package com.lars0709.DataPlants.controller;
 
 import com.lars0709.DataPlants.model.Strain;
+import com.lars0709.DataPlants.repository.StrainRepository;
 import com.lars0709.DataPlants.service.StrainService;
 import org.springframework.beans.propertyeditors.CustomNumberEditor;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.ui.ModelMap;
 
-import java.io.IOException;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class StrainController {
 
     private final StrainService strainService;
+    private final StrainRepository strainRepository;
 
-    public StrainController(StrainService strainService) {
+    public StrainController(StrainService strainService, StrainRepository strainRepository) {
         this.strainService = strainService;
+        this.strainRepository = strainRepository;
     }
 
     @InitBinder
@@ -105,4 +108,67 @@ public class StrainController {
         }
         return "redirect:/strains";
     }
+
+    @GetMapping("/strains/{id}")
+    public String getStrain(@PathVariable Long id, Model model) {
+        Optional<Strain> optionalStrain = strainService.getStrainById(id);
+        if (optionalStrain.isPresent()) {
+            model.addAttribute("strain", optionalStrain.get());
+            return "strain/strain-details";
+        } else {
+            // handle case when strain is not found
+            return "error/error404";
+        }
+    }
+
+    @GetMapping("/strains/edit/{id}")
+    public String editStrain(@PathVariable Long id, Model model) {
+        Optional<Strain> optionalStrain = strainService.getStrainById(id);
+        if (optionalStrain.isPresent()) {
+            Strain strain = optionalStrain.get();
+            model.addAttribute("strain", strain);
+            return "strain/edit-strain";
+        } else {
+            return "redirect:/strains";
+        }
+    }
+
+    @PostMapping("/strains/edit/{id}")
+    public String updateStrain(@PathVariable("id") long id, @Valid Strain strain, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "edit-strain";
+        }
+
+        Optional<Strain> existingStrainOpt = strainRepository.findById(id);
+        if (!existingStrainOpt.isPresent()) {
+            // handle error when strain with the given id doesn't exist
+        }
+
+        Strain existingStrain = existingStrainOpt.get();
+        existingStrain.setName(strain.getName());
+        existingStrain.setDescription(strain.getDescription());
+        existingStrain.setImageUrl(strain.getImageUrl());
+        existingStrain.setParent_plant_one(strain.getParent_plant_one());
+        existingStrain.setParent_plant_two(strain.getParent_plant_two());
+        existingStrain.setParent_plant_three(strain.getParent_plant_three());
+        existingStrain.setAliases(strain.getAliases());
+        existingStrain.setFeelings(strain.getFeelings());
+        existingStrain.setTastes(strain.getTastes());
+        existingStrain.setThcLevel(strain.getThcLevel());
+        existingStrain.setCbdLevel(strain.getCbdLevel());
+        existingStrain.setSativaLevel(strain.getSativaLevel());
+        existingStrain.setIndicaLevel(strain.getIndicaLevel());
+        existingStrain.setRuderalisLevel(strain.getRuderalisLevel());
+        existingStrain.setFloweringPhaseMin(strain.getFloweringPhaseMin());
+        existingStrain.setFloweringPhaseMax(strain.getFloweringPhaseMax());
+        existingStrain.setSeedToHarvestMin(strain.getSeedToHarvestMin());
+        existingStrain.setSeedToHarvestMax(strain.getSeedToHarvestMax());
+        existingStrain.setIndoorYieldMin(strain.getIndoorYieldMin());
+        existingStrain.setIndoorYieldMax(strain.getIndoorYieldMax());
+        // update other fields...
+
+        strainRepository.save(existingStrain);
+        return "redirect:/strains";
+    }
+
 }
