@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Optional;
 
 @Controller
@@ -70,7 +67,8 @@ public class PlantController {
                              @RequestParam(value = "harvestDate", required = false) LocalDate harvestDate,
                              @RequestParam(value = "startDryingDate", required = false) LocalDate startDryingDate,
                              @RequestParam(value = "startCuringDate", required = false) LocalDate startCuringDate,
-                             @RequestParam(value = "harvestWeight", required = false) Integer harvestWeight) {
+                             @RequestParam(value = "harvestWeight", required = false) Integer harvestWeight,
+                             @RequestParam(value = "status") boolean status){
 
         try {
             // Set the numerical values in the Strain entity
@@ -83,6 +81,7 @@ public class PlantController {
             plant.setStartDryingDate(startDryingDate);
             plant.setStartCuringDate(startCuringDate);
             plant.setHarvestWeight(harvestWeight);
+            plant.setStatus(status);
 
             // Save the Plant entity
             plantService.savePlant(plant);
@@ -119,6 +118,7 @@ public class PlantController {
             existingPlant.setStartDryingDate(plant.getStartDryingDate());
             existingPlant.setStartCuringDate(plant.getStartCuringDate());
             existingPlant.setHarvestWeight(plant.getHarvestWeight());
+            existingPlant.setStatus(plant.isStatus());
             plantService.savePlant(existingPlant);
         }
         return "redirect:/plants";

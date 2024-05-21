@@ -1,20 +1,19 @@
 package com.lars0709.DataPlants.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Entity(name = "daily_plant_update")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class DailyPlantUpdate {
 
     public DailyPlantUpdate(Plant plant, LocalDate entryDate, int week, int day, String water, String nutrients,
-                            String stage, String comment, String problem, byte[] imageData) {
+                            String stage, String comment, String problem) {
         this.plant = plant;
         this.entryDate = entryDate;
         this.week = week;
@@ -24,7 +23,6 @@ public class DailyPlantUpdate {
         this.stage = stage;
         this.comment = comment;
         this.problem = problem;
-        this.imageData = imageData;
     }
 
 
@@ -39,31 +37,26 @@ public class DailyPlantUpdate {
     @Column(name = "entry_date", nullable = false)
     private LocalDate entryDate;
 
-    @Column(name = "week", nullable = false)
+    @Column(name = "week")
     private int week;
 
-    @Column(name = "day", nullable = false)
+    @Column(name = "day")
     private int day;
 
-    @Column(name = "water", nullable = false)
+    @Column(name = "water")
     private String water;
 
-    @Column(name = "nutrients", nullable = false)
+    @Column(name = "nutrients")
     private String nutrients;
 
-    @Column(name = "stage", nullable = false)
+    @Column(name = "stage")
     private String stage;
 
-    @Column(name = "comment", nullable = false)
+    @Column(name = "comment")
     private String comment;
 
-    @Column(name = "problem", nullable = false)
+    @Column(name = "problem")
     private String problem;
-
-    // Define field to store image data
-    @Lob
-    @Column(name = "image_data")
-    private byte[] imageData;
 
     // Other fields and relationships...
 }
