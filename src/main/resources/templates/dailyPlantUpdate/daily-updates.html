@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Daily Updates</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <style>
+        body {
+            background-color: #343a40;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body class="body text-white">
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<h1 class="text-center display-1 mt-4">Daily Updates</h1>
+
+<div class="text-center mt-5">
+    <a href="/add-daily-plant-update" class="btn btn-success btn-lg px-4 rounded-pill" role="button">
+        Add Daily Update
+    </a>
+</div>
+
+<div class="container mt-4">
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Entry Date</th>
+                <th scope="col">Week</th>
+                <th scope="col">Day</th>
+                <th scope="col">Water</th>
+                <th scope="col">Nutrients</th>
+                <th scope="col">Stage</th>
+                <th scope="col">Comment</th>
+                <th scope="col">Problem</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="update : ${dailyPlantUpdates}">
+                <td th:text="${update.entryDate}"></td>
+                <td th:text="${update.week}"></td>
+                <td th:text="${update.day}"></td>
+                <td th:text="${update.water}"></td>
+                <td th:text="${update.nutrients}"></td>
+                <td th:text="${update.stage}"></td>
+                <td th:text="${update.comment}"></td>
+                <td th:text="${update.problem}"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Include Bootstrap JS and its dependencies below -->
+<script src="/static/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -15,7 +15,7 @@ public class Plant {
 
     public Plant(LocalDate startOfGerminationStage, LocalDate startOfSeedlingStage,
                  LocalDate startOfVegetativeStage, LocalDate startOfFloweringStage, LocalDate harvestDate,
-                 LocalDate startDryingDate, LocalDate startCuringDate, Integer harvestWeight){
+                 LocalDate startDryingDate, LocalDate startCuringDate, Integer harvestWeight, boolean status) {
         this.startOfGerminationStage = startOfGerminationStage;
         this.startOfSeedlingStage = startOfSeedlingStage;
         this.startOfVegetativeStage = startOfVegetativeStage;
@@ -24,6 +24,7 @@ public class Plant {
         this.startDryingDate = startDryingDate;
         this.startCuringDate = startCuringDate;
         this.harvestWeight = harvestWeight;
+        this.status = status; // active/inactive
     }
 
     @Id
@@ -57,6 +58,9 @@ public class Plant {
 
     @Column(name = "harvest_weight")
     private Integer harvestWeight;
+
+    @Column(name = "status", nullable = false)
+    private boolean status;
 
     // Other fields and relationships...
 }

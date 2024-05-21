@@ -29,4 +29,8 @@ public class PlantService {
     public Optional<Plant> getPlantById(Long id) {
         return plantRepository.findById(id);
     }
+
+    public List<Plant> getAllActivePlants() {
+    return plantRepository.findAllByStatus(true);
+}
 }
