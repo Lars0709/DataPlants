@@ -47,7 +47,8 @@
 
         <!-- First Card: Title and Picture -->
         <div class="col">
-            <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" th:style="'background-image: url(' + ${strain.imageUrl} + '); background-size: cover; background-position: center; background-repeat: no-repeat;'">
+            <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
+                 th:style="'background-image: url(' + ${strain.imageUrl} + '); background-size: cover; background-position: center; background-repeat: no-repeat;'">
                 <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
                     <h1 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold" th:text="${strain.name}"></h1>
                 </div>
@@ -73,24 +74,56 @@
                     <p><strong>CBD Level:</strong> <span th:text="${strain.cbdLevel ?: '?'}"></span></p>
                     <p><strong>Grow Type:</strong> <span th:text="${strain.growType ?: '?'}"></span></p>
                     <p><strong>Strain Type:</strong> <span th:text="${strain.strainType ?: '?'}"></span></p>
-                    <p><strong>Feelings:</strong> <span th:text="${#strings.arrayJoin(strain.feelings, ', ') ?: '?'}"></span></p>
-                    <p><strong>Tastes:</strong> <span th:text="${#strings.arrayJoin(strain.tastes, ', ') ?: '?'}"></span></p>
+                    <p><strong>Feelings:</strong> <span
+                            th:text="${#strings.arrayJoin(strain.feelings, ', ') ?: '?'}"></span></p>
+                    <p><strong>Tastes:</strong> <span
+                            th:text="${#strings.arrayJoin(strain.tastes, ', ') ?: '?'}"></span></p>
                     <p><strong>Seed Origin:</strong> <span th:text="${strain.seedOrigin ?: '?'}"></span></p>
                     <p><strong>Price Per Seed:</strong> <span th:text="${strain.pricePerSeed ?: '?'}"></span> €</p>
-                    <p><strong>Flowering Phase:</strong> <span th:text="${strain.floweringPhaseMin ?: '?'} + ' - ' + ${strain.floweringPhaseMax ?: '?'}"></span> weeks</p>
-                    <p><strong>Seed to Harvest:</strong> <span th:text="${strain.seedToHarvestMin ?: '?'} + ' - ' + ${strain.seedToHarvestMax ?: '?'}"></span> weeks</p>
-                    <p><strong>Indoor Yield:</strong> <span th:text="${strain.indoorYieldMin ?: '?'} + ' - ' + ${strain.indoorYieldMax ?: '?'}"></span> grams</p>
+                    <p><strong>Flowering Phase:</strong> <span
+                            th:text="${strain.floweringPhaseMin ?: '?'} + ' - ' + ${strain.floweringPhaseMax ?: '?'}"></span>
+                        weeks</p>
+                    <p><strong>Seed to Harvest:</strong> <span
+                            th:text="${strain.seedToHarvestMin ?: '?'} + ' - ' + ${strain.seedToHarvestMax ?: '?'}"></span>
+                        weeks</p>
+                    <p><strong>Indoor Yield:</strong> <span
+                            th:text="${strain.indoorYieldMin ?: '?'} + ' - ' + ${strain.indoorYieldMax ?: '?'}"></span>
+                        grams</p>
                 </div>
             </div>
         </div>
+    </div>
 
-</div>
-<div class="text-center">
-    <a th:href="@{'/strains/edit/' + ${strain.id}}" class="btn btn-primary">Edit</a>
-</div>
+    <div class="text-center">
+        <a th:href="@{'/strains/edit/' + ${strain.id}}" class="btn btn-primary">Edit</a>
+        <!-- Delete button -->
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                style="padding: .375rem 8rem;">Delete
+        </button>
+    </div>
 
+    <!-- Delete confirmation modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this entry?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <form th:action="@{'/strains/details/delete/' + ${strain.id}}" method="post">
+                        <button type="submit" class="btn btn-danger">Yes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-
-<script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
 </body>
 </html>

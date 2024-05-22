@@ -1,17 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Add Daily Plant Update</title>
+    <title>Edit Daily Plant Update</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <style>
         body {
             background-color: #343a40;
             color: #fff;
-        }
-
-        .required::after {
-            content: " *";
-            color: red;
         }
 
         .form-control {
@@ -30,70 +25,74 @@
             background-color: #198754;
             border-color: #198754;
         }
+
+        .required::after {
+            content: " *";
+            color: red;
+        }
     </style>
 </head>
 <body>
 <div th:replace="~{fragments/navbar :: navbar}"></div>
+
 <div class="container py-5">
-    <h1 class="mb-4">Add Daily Plant Update</h1>
-    <form th:action="@{/add-daily-plant-update}" th:object="${dailyPlantUpdate}" method="post"
+    <h1 class="mb-4">Edit Daily Plant Update</h1>
+    <form th:action="@{'/dailyupdates/details/edit/' + ${dailyPlantUpdate.id}}" th:object="${dailyPlantUpdate}" method="post"
           class="rounded p-4 bg-dark">
-        <div class="mb-3">
-            <label for="plant" class="form-label required">Plant</label>
-            <select class="form-select form-control" id="plant" th:field="*{plant.id}" required>
-                <option value="">Select Plant</option>
-                <option th:each="plant : ${plants}" th:value="${plant.id}" th:text="${plant.strain.name}"></option>
-            </select>
-        </div>
 
         <div class="mb-3">
             <label for="entryDate" class="form-label required">Entry Date</label>
-            <input type="date" class="form-control" id="entryDate" th:field="*{entryDate}" required>
+            <input type="date" class="form-control" id="entryDate" th:field="*{entryDate}"
+                   th:value="${dailyPlantUpdate.entryDate}" required>
+            <input type="hidden" id="entryDateValue" th:value="${dailyPlantUpdate.entryDate}">
         </div>
 
         <div class="mb-3">
             <label for="week" class="form-label">Week</label>
-            <input type="number" class="form-control" id="week" th:field="*{week}">
+            <input type="number" class="form-control" id="week" th:field="*{week}" th:value="${dailyPlantUpdate.week}">
         </div>
-
         <div class="mb-3">
             <label for="day" class="form-label">Day</label>
-            <input type="number" class="form-control" id="day" th:field="*{day}">
+            <input type="number" class="form-control" id="day" th:field="*{day}" th:value="${dailyPlantUpdate.day}">
         </div>
-
         <div class="mb-3">
             <label for="water" class="form-label">Water</label>
-            <input type="text" class="form-control" id="water" th:field="*{water}">
+            <input type="text" class="form-control" id="water" th:field="*{water}" th:value="${dailyPlantUpdate.water}">
         </div>
-
         <div class="mb-3">
             <label for="nutrients" class="form-label">Nutrients</label>
-            <input type="text" class="form-control" id="nutrients" th:field="*{nutrients}">
+            <input type="text" class="form-control" id="nutrients" th:field="*{nutrients}"
+                   th:value="${dailyPlantUpdate.nutrients}">
         </div>
-
         <div class="mb-3">
             <label for="stage" class="form-label">Stage</label>
-            <input type="text" class="form-control" id="stage" th:field="*{stage}">
+            <input type="text" class="form-control" id="stage" th:field="*{stage}" th:value="${dailyPlantUpdate.stage}">
         </div>
-
         <div class="mb-3">
             <label for="comment" class="form-label">Comment</label>
-            <input type="text" class="form-control" id="comment" th:field="*{comment}">
+            <input type="text" class="form-control" id="comment" th:field="*{comment}"
+                   th:value="${dailyPlantUpdate.comment}">
         </div>
-
         <div class="mb-3">
             <label for="problem" class="form-label">Problem</label>
-            <input type="text" class="form-control" id="problem" th:field="*{problem}">
+            <input type="text" class="form-control" id="problem" th:field="*{problem}"
+                   th:value="${dailyPlantUpdate.problem}">
         </div>
-
         <button type="submit" class="btn btn-success float-end">Submit</button>
         <p class="mt-2"><span class="required"></span> indicates a required field</p>
     </form>
-
 </div>
+<script>
+    window.onload = function() {
+        // Get the date value from the hidden input field
+        var entryDateValue = document.getElementById('entryDateValue').value;
 
+        // Set the value of the date input field
+        document.getElementById('entryDate').value = entryDateValue;
+
+    };
+</script>
 <!-- Include Bootstrap JS and its dependencies below -->
 <script src="/static/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>
