@@ -25,6 +25,11 @@
             background-color: #198754;
             border-color: #198754;
         }
+
+        .required::after {
+            content: " *";
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -36,8 +41,10 @@
           class="rounded p-4 bg-dark">
 
         <div class="mb-3">
-            <label for="entryDate" class="form-label">Entry Date</label>
-            <input type="date" class="form-control" id="entryDate" th:field="*{entryDate}" th:value="${dailyPlantUpdate.entryDate}">
+            <label for="entryDate" class="form-label required">Entry Date</label>
+            <input type="date" class="form-control" id="entryDate" th:field="*{entryDate}"
+                   th:value="${dailyPlantUpdate.entryDate}" required>
+            <input type="hidden" id="entryDateValue" th:value="${dailyPlantUpdate.entryDate}">
         </div>
 
         <div class="mb-3">
@@ -72,9 +79,19 @@
                    th:value="${dailyPlantUpdate.problem}">
         </div>
         <button type="submit" class="btn btn-success float-end">Submit</button>
+        <p class="mt-2"><span class="required"></span> indicates a required field</p>
     </form>
 </div>
+<script>
+    window.onload = function() {
+        // Get the date value from the hidden input field
+        var entryDateValue = document.getElementById('entryDateValue').value;
 
+        // Set the value of the date input field
+        document.getElementById('entryDate').value = entryDateValue;
+
+    };
+</script>
 <!-- Include Bootstrap JS and its dependencies below -->
 <script src="/static/js/bootstrap.bundle.min.js"></script>
 </body>
