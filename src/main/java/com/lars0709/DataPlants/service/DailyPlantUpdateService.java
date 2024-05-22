@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DailyPlantUpdateService {
@@ -22,4 +23,8 @@ public class DailyPlantUpdateService {
     public void save(DailyPlantUpdate dailyPlantUpdate) {
         dailyPlantUpdateRepository.save(dailyPlantUpdate);
     }
+
+    public Optional<DailyPlantUpdate> getDailyPlantUpdateById(Long id) {
+    return dailyPlantUpdateRepository.findById(id);
+}
 }

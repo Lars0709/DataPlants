@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class DailyPlantUpdateController {
@@ -48,7 +49,7 @@ public class DailyPlantUpdateController {
     }
 
     @PostMapping("/add-daily-plant-update")
-    public String saveDailyUpdate(@ModelAttribute DailyPlantUpdate dailyPlantUpdate){
+    public String saveDailyUpdate(@ModelAttribute DailyPlantUpdate dailyPlantUpdate) {
 
         try {
             dailyPlantUpdate.setEntryDate(dailyPlantUpdate.getEntryDate());
@@ -75,5 +76,38 @@ public class DailyPlantUpdateController {
         model.addAttribute("dailyPlantUpdates", dailyPlantUpdates);
         return "dailyPlantUpdate/daily-updates";
     }
+
+    @GetMapping("/dailyupdates/{id}")
+    public String editDailyUpdate(@PathVariable Long id, Model model) {
+        Optional<DailyPlantUpdate> optionalDailyPlantUpdate = dailyPlantUpdateService.getDailyPlantUpdateById(id);
+        if (optionalDailyPlantUpdate.isPresent()) {
+            DailyPlantUpdate dailyPlantUpdate = optionalDailyPlantUpdate.get();
+            model.addAttribute("dailyPlantUpdate", dailyPlantUpdate);
+            return "dailyPlantUpdate/edit-daily-plant-update";
+        } else {
+            return "redirect:/dailyupdates";
+        }
+    }
+
+    @PostMapping("/dailyupdates/{id}")
+public String updateDailyUpdate(@PathVariable Long id, @ModelAttribute DailyPlantUpdate dailyPlantUpdate) {
+    Optional<DailyPlantUpdate> optionalDailyPlantUpdate = dailyPlantUpdateService.getDailyPlantUpdateById(id);
+    if (optionalDailyPlantUpdate.isPresent()) {
+        DailyPlantUpdate existingDailyPlantUpdate = optionalDailyPlantUpdate.get();
+
+        // Update the properties of the existingDailyPlantUpdate object
+        existingDailyPlantUpdate.setEntryDate(dailyPlantUpdate.getEntryDate());
+        existingDailyPlantUpdate.setWeek(dailyPlantUpdate.getWeek());
+        existingDailyPlantUpdate.setDay(dailyPlantUpdate.getDay());
+        existingDailyPlantUpdate.setWater(dailyPlantUpdate.getWater());
+        existingDailyPlantUpdate.setNutrients(dailyPlantUpdate.getNutrients());
+        existingDailyPlantUpdate.setStage(dailyPlantUpdate.getStage());
+        existingDailyPlantUpdate.setComment(dailyPlantUpdate.getComment());
+        existingDailyPlantUpdate.setProblem(dailyPlantUpdate.getProblem());
+
+        dailyPlantUpdateService.save(existingDailyPlantUpdate);
+    }
+    return "redirect:/dailyupdates";
+}
 
 }
