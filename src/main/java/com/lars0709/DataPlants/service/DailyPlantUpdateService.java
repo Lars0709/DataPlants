@@ -5,8 +5,6 @@ import com.lars0709.DataPlants.repository.DailyPlantUpdateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,6 +23,10 @@ public class DailyPlantUpdateService {
     }
 
     public Optional<DailyPlantUpdate> getDailyPlantUpdateById(Long id) {
-    return dailyPlantUpdateRepository.findById(id);
-}
+        return dailyPlantUpdateRepository.findById(id);
+    }
+
+    public void deleteDailyPlantUpdateById(Long id) {
+        dailyPlantUpdateRepository.deleteById(id);
+    }
 }

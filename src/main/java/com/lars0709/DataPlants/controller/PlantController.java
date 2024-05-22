@@ -124,4 +124,10 @@ public class PlantController {
         return "redirect:/plants";
     }
 
+    @PostMapping("/plants/details/delete/{id}")
+    public String deletePlant(@PathVariable Long id) {
+        plantService.deletePlantById(id);
+        return "redirect:/plants";
+    }
+
 }

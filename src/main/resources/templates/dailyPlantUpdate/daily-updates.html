@@ -40,7 +40,7 @@
         <tr th:each="update : ${dailyPlantUpdates}" th:id="${'row' + update.id}">
             <script>
                 document.getElementById('row' + [[${update.id}]]).addEventListener('click', function () {
-                    window.location.href = '/dailyupdates/' + [[${update.id}]];
+                    window.location.href = '/dailyupdates/details/' + [[${update.id}]];
                 });
             </script>
             <td th:text="${update.entryDate}"></td>

@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -77,7 +79,7 @@ public class DailyPlantUpdateController {
         return "dailyPlantUpdate/daily-updates";
     }
 
-    @GetMapping("/dailyupdates/{id}")
+    @GetMapping("/dailyupdates/details/edit/{id}")
     public String editDailyUpdate(@PathVariable Long id, Model model) {
         Optional<DailyPlantUpdate> optionalDailyPlantUpdate = dailyPlantUpdateService.getDailyPlantUpdateById(id);
         if (optionalDailyPlantUpdate.isPresent()) {
@@ -89,25 +91,43 @@ public class DailyPlantUpdateController {
         }
     }
 
-    @PostMapping("/dailyupdates/{id}")
-public String updateDailyUpdate(@PathVariable Long id, @ModelAttribute DailyPlantUpdate dailyPlantUpdate) {
-    Optional<DailyPlantUpdate> optionalDailyPlantUpdate = dailyPlantUpdateService.getDailyPlantUpdateById(id);
-    if (optionalDailyPlantUpdate.isPresent()) {
-        DailyPlantUpdate existingDailyPlantUpdate = optionalDailyPlantUpdate.get();
+    @PostMapping("/dailyupdates/details/edit/{id}")
+    public String updateDailyUpdate(@PathVariable Long id, @ModelAttribute DailyPlantUpdate dailyPlantUpdate) {
+        Optional<DailyPlantUpdate> optionalDailyPlantUpdate = dailyPlantUpdateService.getDailyPlantUpdateById(id);
+        if (optionalDailyPlantUpdate.isPresent()) {
+            DailyPlantUpdate existingDailyPlantUpdate = optionalDailyPlantUpdate.get();
 
-        // Update the properties of the existingDailyPlantUpdate object
-        existingDailyPlantUpdate.setEntryDate(dailyPlantUpdate.getEntryDate());
-        existingDailyPlantUpdate.setWeek(dailyPlantUpdate.getWeek());
-        existingDailyPlantUpdate.setDay(dailyPlantUpdate.getDay());
-        existingDailyPlantUpdate.setWater(dailyPlantUpdate.getWater());
-        existingDailyPlantUpdate.setNutrients(dailyPlantUpdate.getNutrients());
-        existingDailyPlantUpdate.setStage(dailyPlantUpdate.getStage());
-        existingDailyPlantUpdate.setComment(dailyPlantUpdate.getComment());
-        existingDailyPlantUpdate.setProblem(dailyPlantUpdate.getProblem());
+            // Update the properties of the existingDailyPlantUpdate object
+            existingDailyPlantUpdate.setEntryDate(dailyPlantUpdate.getEntryDate());
+            existingDailyPlantUpdate.setWeek(dailyPlantUpdate.getWeek());
+            existingDailyPlantUpdate.setDay(dailyPlantUpdate.getDay());
+            existingDailyPlantUpdate.setWater(dailyPlantUpdate.getWater());
+            existingDailyPlantUpdate.setNutrients(dailyPlantUpdate.getNutrients());
+            existingDailyPlantUpdate.setStage(dailyPlantUpdate.getStage());
+            existingDailyPlantUpdate.setComment(dailyPlantUpdate.getComment());
+            existingDailyPlantUpdate.setProblem(dailyPlantUpdate.getProblem());
 
-        dailyPlantUpdateService.save(existingDailyPlantUpdate);
+            dailyPlantUpdateService.save(existingDailyPlantUpdate);
+        }
+        return "redirect:/dailyupdates";
     }
-    return "redirect:/dailyupdates";
-}
+
+    @GetMapping("/dailyupdates/details/{id}")
+    public String getDailyUpdateDetails(@PathVariable Long id, Model model) {
+        Optional<DailyPlantUpdate> optionalDailyPlantUpdate = dailyPlantUpdateService.getDailyPlantUpdateById(id);
+        if (optionalDailyPlantUpdate.isPresent()) {
+            DailyPlantUpdate dailyPlantUpdate = optionalDailyPlantUpdate.get();
+            model.addAttribute("dailyPlantUpdate", dailyPlantUpdate);
+            return "dailyPlantUpdate/daily-plant-update-details";
+        } else {
+            return "redirect:/dailyupdates";
+        }
+    }
+
+    @PostMapping("/dailyupdates/details/delete/{id}")
+    public String deleteDailyUpdate(@PathVariable Long id) {
+        dailyPlantUpdateService.deleteDailyPlantUpdateById(id);
+        return "redirect:/dailyupdates";
+    }
 
 }

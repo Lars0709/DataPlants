@@ -29,5 +29,9 @@ public class StrainService {
     public Optional<Strain> getStrainById(Long id) {
         return strainRepository.findById(id);
     }
+
+    public void deleteStrainById(Long id) {
+    strainRepository.deleteById(id);
+}
 }
 

@@ -171,4 +171,10 @@ public class StrainController {
         return "redirect:/strains";
     }
 
+    @PostMapping("/strains/details/delete/{id}")
+    public String deleteStrain(@PathVariable Long id) {
+        strainService.deleteStrainById(id);
+        return "redirect:/strains";
+    }
+
 }

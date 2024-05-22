@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Daily Plant Update Details</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <style>
+        body {
+            background-color: #343a40;
+            color: #fff;
+        }
+
+        .update-card {
+            border: none;
+            border-radius: 1rem;
+            background-color: #495057;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .update-card h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .update-card p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .update-card .badge {
+            margin-right: 0.5rem;
+        }
+
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container px-4 py-5" id="custom-cards">
+    <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+
+        <!-- Card: All Information -->
+        <div class="col">
+            <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
+                <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                    <h1 class="mb-4 display-6 lh-1 fw-bold" th:text="${dailyPlantUpdate.plant.strain.name}"></h1>
+                    <p><strong>Entry Date:</strong> <span th:text="${dailyPlantUpdate.entryDate}"></span></p>
+                    <p><strong>Week:</strong> <span th:text="${dailyPlantUpdate.week}"></span></p>
+                    <p><strong>Day:</strong> <span th:text="${dailyPlantUpdate.day}"></span></p>
+                    <p><strong>Water:</strong> <span th:text="${dailyPlantUpdate.water}"></span></p>
+                    <p><strong>Nutrients:</strong> <span th:text="${dailyPlantUpdate.nutrients}"></span></p>
+                    <p><strong>Stage:</strong> <span th:text="${dailyPlantUpdate.stage}"></span></p>
+                    <p><strong>Comment:</strong> <span th:text="${dailyPlantUpdate.comment}"></span></p>
+                    <p><strong>Problem:</strong> <span th:text="${dailyPlantUpdate.problem}"></span></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="text-center">
+    <a th:href="@{'/dailyupdates/details/edit/' + ${dailyPlantUpdate.id}}" class="btn btn-success"
+       style="padding: .375rem 8rem;">Edit</a>
+
+    <!-- Delete button -->
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"
+            style="padding: .375rem 8rem;">Delete
+    </button>
+</div>
+
+<!-- Delete confirmation modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark text-white"> <!-- Add bg-dark and text-white classes here -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button> <!-- Add btn-close-white class here -->
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this entry?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <form th:action="@{'/dailyupdates/details/delete/' + ${dailyPlantUpdate.id}}" method="post">
+                    <button type="submit" class="btn btn-danger">Yes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script th:src="@{/js/bootstrap.min.js}"></script>
+</body>
+</html>

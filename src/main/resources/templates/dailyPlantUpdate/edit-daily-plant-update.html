@@ -37,7 +37,7 @@
 
 <div class="container py-5">
     <h1 class="mb-4">Edit Daily Plant Update</h1>
-    <form th:action="@{'/dailyupdates/' + ${dailyPlantUpdate.id}}" th:object="${dailyPlantUpdate}" method="post"
+    <form th:action="@{'/dailyupdates/details/edit/' + ${dailyPlantUpdate.id}}" th:object="${dailyPlantUpdate}" method="post"
           class="rounded p-4 bg-dark">
 
         <div class="mb-3">
