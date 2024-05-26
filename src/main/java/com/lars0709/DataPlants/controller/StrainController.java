@@ -2,7 +2,6 @@ package com.lars0709.DataPlants.controller;
 
 import com.lars0709.DataPlants.model.Strain;
 import com.lars0709.DataPlants.repository.StrainRepository;
-import com.lars0709.DataPlants.service.ImageService;
 import com.lars0709.DataPlants.service.StrainService;
 import org.springframework.beans.propertyeditors.CustomNumberEditor;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -12,7 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -23,12 +21,10 @@ public class StrainController {
 
     private final StrainService strainService;
     private final StrainRepository strainRepository;
-    private final ImageService imageService;
 
-    public StrainController(StrainService strainService, StrainRepository strainRepository, ImageService imageService) {
+    public StrainController(StrainService strainService, StrainRepository strainRepository) {
         this.strainService = strainService;
         this.strainRepository = strainRepository;
-        this.imageService = imageService;
     }
 
     @InitBinder

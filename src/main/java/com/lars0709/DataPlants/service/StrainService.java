@@ -1,6 +1,5 @@
 package com.lars0709.DataPlants.service;
 
-import com.lars0709.DataPlants.model.Image;
 import com.lars0709.DataPlants.model.Strain;
 import com.lars0709.DataPlants.repository.StrainRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +14,10 @@ import java.util.Optional;
 public class StrainService {
 
     private final StrainRepository strainRepository;
-    private final ImageService imageService;
 
     @Autowired
-    public StrainService(StrainRepository strainRepository, ImageService imageService) {
+    public StrainService(StrainRepository strainRepository) {
         this.strainRepository = strainRepository;
-        this.imageService = imageService;
     }
 
     public List<Strain> getAllStrains() {
