@@ -26,18 +26,20 @@
 
 <div class="container mt-3">
     <div class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="col" th:each="strain : ${strains}">
+        <div class="col" th:each="strain : ${strains.keySet()}">
             <!-- Wrap the card inside an <a> tag -->
             <a th:href="@{'/strains/' + ${strain.id}}" class="text-decoration-none text-reset">
                 <div class="card h-100 bg-dark custom-card text-white">
+
                     <!-- You can add an image here if you have one -->
-                    <img th:src="${strain.imageUrl}" class="card-img-top" alt="Strain Image">
+                    <img th:src="@{'data:image/jpeg;base64,' + ${strains.get(strain)}}" class="card-img-top" alt="Strain Image">
 
                     <div class="card-body">
                         <h5 class="card-title" th:text="${strain.name}"></h5>
                         <p class="card-text" th:text="${strain.description != null ? (strain.description.length() > 140 ? #strings.substring(strain.description, 0, 140) + '...' : strain.description) : ''}"></p>
                     </div>
 
+                    <!-- Rest of the card content... -->
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item custom-card bg-dark text-white"
                             th:text="'Grow Type:  ' + ${strain.growType}"></li>
@@ -50,6 +52,7 @@
                         <li class="list-group-item custom-card bg-dark text-white"
                             th:text="'Seed Origin:  '+ ${strain.seedOrigin}"></li>
                     </ul>
+
                 </div>
             </a>
         </div>

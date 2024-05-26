@@ -5,6 +5,8 @@ import com.lars0709.DataPlants.repository.StrainRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +24,7 @@ public class StrainService {
         return strainRepository.findAll();
     }
 
-    public void saveStrain(Strain strain) {
+    public void saveStrain(Strain strain) throws IOException {
         strainRepository.save(strain);
     }
 
@@ -31,7 +33,6 @@ public class StrainService {
     }
 
     public void deleteStrainById(Long id) {
-    strainRepository.deleteById(id);
+        strainRepository.deleteById(id);
+    }
 }
-}
-

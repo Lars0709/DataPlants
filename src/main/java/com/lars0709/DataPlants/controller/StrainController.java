@@ -10,13 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.io.IOException;
+import java.util.*;
 
 @Controller
 public class StrainController {
@@ -36,13 +34,6 @@ public class StrainController {
         dataBinder.registerCustomEditor(Integer.class, new CustomNumberEditor(Integer.class, true));
     }
 
-    @GetMapping(value = "/strains")
-    public ModelAndView getStrainsSite() {
-        ModelAndView modelAndView = new ModelAndView("strain/strains");
-        modelAndView.addObject("strains", strainService.getAllStrains());
-        return modelAndView;
-    }
-
     @GetMapping("/strains/add")
     public String getAddStrainForm(Model model) {
         model.addAttribute("strain", new Strain());
@@ -51,7 +42,7 @@ public class StrainController {
 
     @PostMapping("/strains/add")
     public String saveStrain(@ModelAttribute Strain strain,
-                             @RequestParam(value = "imageUrl", required = false) String imageUrl,
+                             @RequestParam("image") MultipartFile multipartFile,
                              @RequestParam(value = "description", required = false) String description,
                              @RequestParam(value = "aliases", required = false) String aliases,
                              @RequestParam(value = "parent_plant_one", required = false) String parent_plant_one,
@@ -82,7 +73,6 @@ public class StrainController {
             strain.setTastes(tastesList);
 
             // Set the numerical values in the Strain entity
-            strain.setImageUrl(imageUrl);
             strain.setDescription(description);
             strain.setParent_plant_one(parent_plant_one);
             strain.setParent_plant_two(parent_plant_two);
@@ -98,22 +88,37 @@ public class StrainController {
             strain.setSeedToHarvestMax(seedToHarvestMax);
             strain.setIndoorYieldMin(indoorYieldMin);
             strain.setIndoorYieldMax(indoorYieldMax);
-
+            strain.setImageData(multipartFile.getBytes());
 
             // Save the Strain entity
             strainService.saveStrain(strain);
 
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | IOException e) {
             e.printStackTrace();
         }
         return "redirect:/strains";
+    }
+
+    @GetMapping(value = "/strains")
+    public String getStrainsSite(Model model) {
+        List<Strain> strains = strainService.getAllStrains();
+        Map<Strain, String> strainImageMap = new HashMap<>();
+        for (Strain strain : strains) {
+            String imageDataBase64 = Base64.getEncoder().encodeToString(strain.getImageData());
+            strainImageMap.put(strain, imageDataBase64);
+        }
+        model.addAttribute("strains", strainImageMap);
+        return "strain/strains";
     }
 
     @GetMapping("/strains/{id}")
     public String getStrain(@PathVariable Long id, Model model) {
         Optional<Strain> optionalStrain = strainService.getStrainById(id);
         if (optionalStrain.isPresent()) {
-            model.addAttribute("strain", optionalStrain.get());
+            Strain strain = optionalStrain.get();
+            String imageDataBase64 = Base64.getEncoder().encodeToString(strain.getImageData());
+            model.addAttribute("strain", strain);
+            model.addAttribute("imageData", imageDataBase64);
             return "strain/strain-details";
         } else {
             // handle case when strain is not found
@@ -126,7 +131,9 @@ public class StrainController {
         Optional<Strain> optionalStrain = strainService.getStrainById(id);
         if (optionalStrain.isPresent()) {
             Strain strain = optionalStrain.get();
+            String imageDataBase64 = Base64.getEncoder().encodeToString(strain.getImageData());
             model.addAttribute("strain", strain);
+            model.addAttribute("imageData", imageDataBase64); // Add this line
             return "strain/edit-strain";
         } else {
             return "redirect:/strains";
@@ -134,7 +141,8 @@ public class StrainController {
     }
 
     @PostMapping("/strains/edit/{id}")
-    public String updateStrain(@PathVariable("id") long id, @Valid Strain strain, BindingResult result, Model model) {
+    public String updateStrain(@PathVariable("id") long id, @Valid Strain strain, BindingResult result, Model model,
+                               @RequestParam("image") MultipartFile multipartFile) {
         if (result.hasErrors()) {
             return "edit-strain";
         }
@@ -147,7 +155,6 @@ public class StrainController {
         Strain existingStrain = existingStrainOpt.get();
         existingStrain.setName(strain.getName());
         existingStrain.setDescription(strain.getDescription());
-        existingStrain.setImageUrl(strain.getImageUrl());
         existingStrain.setParent_plant_one(strain.getParent_plant_one());
         existingStrain.setParent_plant_two(strain.getParent_plant_two());
         existingStrain.setParent_plant_three(strain.getParent_plant_three());
@@ -167,6 +174,17 @@ public class StrainController {
         existingStrain.setIndoorYieldMax(strain.getIndoorYieldMax());
         // update other fields...
 
+        // Add this block to handle the image file
+        if (!multipartFile.isEmpty()) {
+            try {
+                byte[] imageData = multipartFile.getBytes();
+                existingStrain.setImageData(imageData);
+            } catch (IOException e) {
+                e.printStackTrace();
+                // Handle the exception appropriately in your application
+            }
+        }
+
         strainRepository.save(existingStrain);
         return "redirect:/strains";
     }
@@ -176,5 +194,5 @@ public class StrainController {
         strainService.deleteStrainById(id);
         return "redirect:/strains";
     }
-
 }
+

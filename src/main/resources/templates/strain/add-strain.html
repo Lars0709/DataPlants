@@ -65,12 +65,13 @@
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 <div class="container py-5">
     <h1 class="mb-4">Add New Strain</h1>
-    <form th:action="@{/strains/add}" th:object="${strain}" method="post" class="rounded p-4 bg-dark">
+    <form th:action="@{/strains/add}" th:object="${strain}" method="post" class="rounded p-4 bg-dark"
+          enctype="multipart/form-data">
 
         <!-- Add this field for image upload -->
         <div class="mb-3">
-            <label for="imageUrl" class="form-label">Link to Image</label>
-            <input type="text" class="form-control" id="imageUrl" name="imageUrl">
+            <label for="image" class="form-label">Image</label>
+            <input type="file" class="form-control" id="image" name="image">
         </div>
 
         <div class="mb-3">
@@ -133,7 +134,8 @@
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="thcLevel" class="form-label required">THC Level in %</label>
-                <input type="number" step="0.1" class="form-control" id="thcLevel" name="thcLevel" min="0" max="100" required>
+                <input type="number" step="0.1" class="form-control" id="thcLevel" name="thcLevel" min="0" max="100"
+                       required>
             </div>
             <div class="col-md-6 mb-3">
                 <label for="cbdLevel" class="form-label">CBD Level</label>
