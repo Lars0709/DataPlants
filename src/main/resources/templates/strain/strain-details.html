@@ -48,7 +48,7 @@
         <!-- First Card: Title and Picture -->
         <div class="col">
             <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
-                 th:style="'background-image: url(' + ${strain.imageUrl} + '); background-size: cover; background-position: center; background-repeat: no-repeat;'">
+                 th:style="'background-image: url(data:image/jpeg;base64,' + ${imageData} + '); background-size: cover; background-position: center; background-repeat: no-repeat;'">
                 <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
                     <h1 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold" th:text="${strain.name}"></h1>
                 </div>

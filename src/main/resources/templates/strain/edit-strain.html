@@ -58,6 +58,13 @@
             background-color: #198754;
             border-color: #198754;
         }
+
+        .current-image {
+            width: 20%; /* Adjust as needed */
+            height: auto;
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Shadow effect */
+        }
     </style>
 </head>
 <body>
@@ -66,14 +73,23 @@
 <div class="container py-5">
     <h1 class="mb-4">Edit Strain</h1>
     <form th:action="@{'/strains/edit/' + ${strain.id}}" th:object="${strain}" class="rounded p-4 bg-dark"
-          method="post">
+          method="post" enctype="multipart/form-data">
 
-        <!-- Add this field for image upload -->
-        <div class="mb-3">
-            <label for="imageUrl" class="form-label">Link to Image</label>
-            <input type="text" class="form-control" id="imageUrl" th:field="*{imageUrl}">
+        <!-- Current Image and Image Upload -->
+        <div class="row">
+            <!-- Current Image -->
+            <div class="col">
+                <label for="currentImage" class="form-label">Current Image</label>
+                <img id="currentImage" th:src="@{'data:image/jpeg;base64,' + ${imageData}}" class="img-fluid" alt="Current Image" style="width: 180px; height: auto;">
+            </div>
 
+            <!-- Image Upload -->
+            <div class="col">
+                <label for="image" class="form-label">New Image</label>
+                <input type="file" class="form-control" id="image" name="image" onchange="loadImage(event)">
+            </div>
         </div>
+
 
         <div class="mb-3">
             <label for="name" class="form-label required">Name</label>
