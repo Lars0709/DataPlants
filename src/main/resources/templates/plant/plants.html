@@ -7,10 +7,12 @@
         .custom-card {
             border: 3px solid #424242;
         }
+
         body {
             background-color: #343a40;
             color: #fff;
         }
+
         .card-img-top {
             width: 100%; /* This will make the image take the full width of the card */
             height: 200px; /* Adjust as needed */
@@ -26,16 +28,21 @@
 
 <div class="container mt-3">
     <div class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="col" th:each="plant : ${plants}">
+        <div class="col" th:each="plant : ${plants.keySet()}">
             <!-- Wrap the card inside an <a> tag -->
             <a th:href="@{'/plants/' + ${plant.id}}" class="text-decoration-none text-reset">
                 <div class="card h-100 bg-dark custom-card text-white">
+
                     <!-- You can add an image here if you have one-->
-                    <img th:src="${plant.strain.imageUrl}" class="card-img-top" alt="Strain Image">
+                    <img th:src="@{'data:image/jpeg;base64,' + ${plants.get(plant)}}" class="card-img-top"
+                         alt="Plant Image">
+
 
                     <div class="card-body">
-                        <h5 class="card-title" th:text="${plant.strain.name + ' | ' + plant.startOfGerminationStage}"></h5>
-                        <p class="card-text" th:text="${plant.strain.description != null ? (plant.strain.description.length() > 140 ? #strings.substring(plant.strain.description, 0, 140) + '...' : plant.strain.description) : ''}"></p>
+                        <h5 class="card-title"
+                            th:text="${plant.strain.name + ' | ' + plant.startOfGerminationStage}"></h5>
+                        <p class="card-text"
+                           th:text="${plant.strain.description != null ? (plant.strain.description.length() > 140 ? #strings.substring(plant.strain.description, 0, 140) + '...' : plant.strain.description) : ''}"></p>
                     </div>
 
                     <ul class="list-group list-group-flush">

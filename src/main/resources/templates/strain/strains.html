@@ -34,6 +34,7 @@
                     <!-- You can add an image here if you have one -->
                     <img th:src="@{'data:image/jpeg;base64,' + ${strains.get(strain)}}" class="card-img-top" alt="Strain Image">
 
+
                     <div class="card-body">
                         <h5 class="card-title" th:text="${strain.name}"></h5>
                         <p class="card-text" th:text="${strain.description != null ? (strain.description.length() > 140 ? #strings.substring(strain.description, 0, 140) + '...' : strain.description) : ''}"></p>

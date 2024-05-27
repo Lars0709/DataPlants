@@ -40,6 +40,16 @@
 <div class="container px-4 py-5" id="custom-cards">
     <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
 
+        <!-- First Card: Title and Picture -->
+        <div class="col">
+            <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
+                 th:style="'background-image: url(data:image/jpeg;base64,' + ${imageData} + '); background-size: cover; background-position: center; background-repeat: no-repeat;'">
+                <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                    <h1 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold" th:text="${dailyPlantUpdate.plant.strain.name}"></h1>
+                </div>
+            </div>
+        </div>
+
         <!-- Card: All Information -->
         <div class="col">
             <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">

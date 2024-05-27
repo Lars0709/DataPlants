@@ -43,9 +43,10 @@
         <!-- First Card: Title and Picture -->
         <div class="col">
             <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
-                 th:style="'background-image: url(' + ${plant.strain.imageUrl} + '); background-size: cover; background-position: center; background-repeat: no-repeat;'">
+                 th:style="'background-image: url(data:image/jpeg;base64,' + ${imageData} + '); background-size: cover; background-position: center; background-repeat: no-repeat;'">
                 <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
                     <h1 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold" th:text="${plant.strain.name}"></h1>
+
                 </div>
             </div>
         </div>
@@ -84,14 +85,14 @@
         </div>
 
     </div>
-</div>
 
-<div class="text-center">
-    <a th:href="@{'/plants/edit/' + ${plant.id}}" class="btn btn-success" style="padding: .375rem 8rem;">Edit</a>
-    <!-- Delete button -->
-    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"
-            style="padding: .375rem 8rem;">Delete
-    </button>
+    <div class="text-center">
+        <a th:href="@{'/plants/edit/' + ${plant.id}}" class="btn btn-success" style="padding: .375rem 8rem;">Edit</a>
+        <!-- Delete button -->
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                style="padding: .375rem 8rem;">Delete
+        </button>
+    </div>
 </div>
 
 <!-- Delete confirmation modal -->
@@ -100,7 +101,8 @@
         <div class="modal-content bg-dark text-white">
             <div class="modal-header">
                 <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 Are you sure you want to delete this entry?

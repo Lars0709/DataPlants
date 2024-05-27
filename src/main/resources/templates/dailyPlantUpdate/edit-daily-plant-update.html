@@ -38,7 +38,22 @@
 <div class="container py-5">
     <h1 class="mb-4">Edit Daily Plant Update</h1>
     <form th:action="@{'/dailyupdates/details/edit/' + ${dailyPlantUpdate.id}}" th:object="${dailyPlantUpdate}" method="post"
-          class="rounded p-4 bg-dark">
+          class="rounded p-4 bg-dark" enctype="multipart/form-data">
+
+        <!-- Current Image and Image Upload -->
+        <div class="row">
+            <!-- Current Image -->
+            <div class="col">
+                <label for="currentImage" class="form-label">Current Image</label>
+                <img id="currentImage" th:src="@{'data:image/jpeg;base64,' + ${imageData}}" class="img-fluid" alt="Current Image" style="width: 180px; height: auto;">
+            </div>
+
+            <!-- Image Upload -->
+            <div class="col">
+                <label for="image" class="form-label">New Image</label>
+                <input type="file" class="form-control" id="image" name="image" onchange="loadImage(event)">
+            </div>
+        </div>
 
         <div class="mb-3">
             <label for="entryDate" class="form-label required">Entry Date</label>

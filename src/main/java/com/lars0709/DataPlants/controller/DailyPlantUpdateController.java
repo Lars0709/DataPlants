@@ -6,19 +6,16 @@ import com.lars0709.DataPlants.repository.DailyPlantUpdateRepository;
 import com.lars0709.DataPlants.repository.PlantRepository;
 import com.lars0709.DataPlants.service.DailyPlantUpdateService;
 import com.lars0709.DataPlants.service.PlantService;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.io.IOException;
+import java.util.*;
 
 @Controller
 public class DailyPlantUpdateController {
@@ -42,16 +39,21 @@ public class DailyPlantUpdateController {
     @GetMapping("/add-daily-plant-update")
     public String getDailyUpdatesForm(Model model) {
         model.addAttribute("dailyPlantUpdate", new DailyPlantUpdate());
-        List<Plant> activePlants = plantService.getAllActivePlants();
-        model.addAttribute("plants", activePlants);
-        if (!activePlants.isEmpty()) {
-            model.addAttribute("plant", activePlants.get(0));
+
+        List<Plant> plants = plantService.getAllPlants();
+        Map<Plant, String> plantImageMap = new HashMap<>();
+        for (Plant plant : plants) {
+            String imageDataBase64 = Base64.getEncoder().encodeToString(plant.getStrain().getImageData());
+            plantImageMap.put(plant, imageDataBase64);
         }
+        model.addAttribute("plants", plantImageMap);
+
         return "dailyPlantUpdate/add-daily-plant-update";
     }
 
     @PostMapping("/add-daily-plant-update")
-    public String saveDailyUpdate(@ModelAttribute DailyPlantUpdate dailyPlantUpdate) {
+    public String saveDailyUpdate(@ModelAttribute DailyPlantUpdate dailyPlantUpdate,
+                                  @RequestParam("image") MultipartFile multipartFile) {
 
         try {
             dailyPlantUpdate.setEntryDate(dailyPlantUpdate.getEntryDate());
@@ -62,12 +64,16 @@ public class DailyPlantUpdateController {
             dailyPlantUpdate.setStage(dailyPlantUpdate.getStage());
             dailyPlantUpdate.setComment(dailyPlantUpdate.getComment());
             dailyPlantUpdate.setProblem(dailyPlantUpdate.getProblem());
+            dailyPlantUpdate.setImageData(multipartFile.getBytes());
+
 
             // Save the DailyPlantUpdate entity
             dailyPlantUpdateService.save(dailyPlantUpdate);
 
         } catch (NumberFormatException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         return "redirect:dailyupdates";
     }
@@ -84,7 +90,9 @@ public class DailyPlantUpdateController {
         Optional<DailyPlantUpdate> optionalDailyPlantUpdate = dailyPlantUpdateService.getDailyPlantUpdateById(id);
         if (optionalDailyPlantUpdate.isPresent()) {
             DailyPlantUpdate dailyPlantUpdate = optionalDailyPlantUpdate.get();
+            String imageDataBase64 = Base64.getEncoder().encodeToString(dailyPlantUpdate.getImageData());
             model.addAttribute("dailyPlantUpdate", dailyPlantUpdate);
+            model.addAttribute("imageData", imageDataBase64); // Add this line
             return "dailyPlantUpdate/edit-daily-plant-update";
         } else {
             return "redirect:/dailyupdates";
@@ -92,7 +100,7 @@ public class DailyPlantUpdateController {
     }
 
     @PostMapping("/dailyupdates/details/edit/{id}")
-    public String updateDailyUpdate(@PathVariable Long id, @ModelAttribute DailyPlantUpdate dailyPlantUpdate) {
+    public String updateDailyUpdate(@PathVariable Long id, @ModelAttribute DailyPlantUpdate dailyPlantUpdate, @RequestParam("image") MultipartFile multipartFile) {
         Optional<DailyPlantUpdate> optionalDailyPlantUpdate = dailyPlantUpdateService.getDailyPlantUpdateById(id);
         if (optionalDailyPlantUpdate.isPresent()) {
             DailyPlantUpdate existingDailyPlantUpdate = optionalDailyPlantUpdate.get();
@@ -107,6 +115,15 @@ public class DailyPlantUpdateController {
             existingDailyPlantUpdate.setComment(dailyPlantUpdate.getComment());
             existingDailyPlantUpdate.setProblem(dailyPlantUpdate.getProblem());
 
+            // Handle the image upload
+            if (!multipartFile.isEmpty()) {
+                try {
+                    existingDailyPlantUpdate.setImageData(multipartFile.getBytes());
+                } catch (IOException e) {
+                    throw new RuntimeException("Failed to store uploaded image.", e);
+                }
+            }
+
             dailyPlantUpdateService.save(existingDailyPlantUpdate);
         }
         return "redirect:/dailyupdates";
@@ -118,6 +135,11 @@ public class DailyPlantUpdateController {
         if (optionalDailyPlantUpdate.isPresent()) {
             DailyPlantUpdate dailyPlantUpdate = optionalDailyPlantUpdate.get();
             model.addAttribute("dailyPlantUpdate", dailyPlantUpdate);
+
+            // Add the image data to the model
+            String imageDataBase64 = Base64.getEncoder().encodeToString(dailyPlantUpdate.getImageData());
+            model.addAttribute("imageData", imageDataBase64);
+
             return "dailyPlantUpdate/daily-plant-update-details";
         } else {
             return "redirect:/dailyupdates";
