@@ -9,10 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class PlantController {
@@ -33,17 +32,25 @@ public class PlantController {
     }
 
     @GetMapping(value = "/plants")
-    public ModelAndView getPlantsSite() {
-        ModelAndView modelAndView = new ModelAndView("plant/plants");
-        modelAndView.addObject("plants", plantService.getAllPlants());
-        return modelAndView;
+    public String getPlantsSite(Model model) {
+        List<Plant> plants = plantService.getAllPlants();
+        Map<Plant, String> plantImageMap = new HashMap<>();
+        for (Plant plant : plants) {
+            String imageDataBase64 = Base64.getEncoder().encodeToString(plant.getStrain().getImageData());
+            plantImageMap.put(plant, imageDataBase64);
+        }
+        model.addAttribute("plants", plantImageMap);
+        return "plant/plants";
     }
 
     @GetMapping("/plants/{id}")
     public String getPlant(@PathVariable Long id, Model model) {
         Optional<Plant> optionalPlant = plantService.getPlantById(id);
         if(optionalPlant.isPresent()) {
-            model.addAttribute("plant", optionalPlant.get());
+            Plant plant = optionalPlant.get();
+            String imageDataBase64 = Base64.getEncoder().encodeToString(plant.getStrain().getImageData());
+            model.addAttribute("plant", plant);
+            model.addAttribute("imageData", imageDataBase64);
             return "plant/plant-details";
         } else {
             // handle case when plant is not found

@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Map;
 
 @Entity(name = "daily_plant_update")
 @Getter
@@ -14,7 +13,7 @@ import java.util.Map;
 public class DailyPlantUpdate {
 
     public DailyPlantUpdate(Plant plant, LocalDate entryDate, int week, int day, String water, String nutrients,
-                            String stage, String comment, String problem) {
+                            String stage, String comment, String problem, byte[] imageData) {
         this.plant = plant;
         this.entryDate = entryDate;
         this.week = week;
@@ -24,6 +23,7 @@ public class DailyPlantUpdate {
         this.stage = stage;
         this.comment = comment;
         this.problem = problem;
+        this.imageData = imageData;
     }
 
 
@@ -58,6 +58,10 @@ public class DailyPlantUpdate {
 
     @Column(name = "problem")
     private String problem;
+
+    @Lob
+    @Column(name = "image_data")
+    private byte[] imageData;
 
     // Other fields and relationships...
 }
