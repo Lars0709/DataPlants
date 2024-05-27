@@ -23,17 +23,15 @@ public class DailyPlantUpdateController {
     private final DailyPlantUpdateService dailyPlantUpdateService;
     private final DailyPlantUpdateRepository dailyPlantUpdateRepository;
     private final PlantService plantService;
-    private final PlantRepository plantRepository;
+
 
 
     public DailyPlantUpdateController(DailyPlantUpdateService dailyPlantUpdateService,
                                       DailyPlantUpdateRepository dailyPlantUpdateRepository,
-                                      PlantService plantService,
-                                      PlantRepository plantRepository) {
+                                      PlantService plantService) {
         this.dailyPlantUpdateService = dailyPlantUpdateService;
         this.dailyPlantUpdateRepository = dailyPlantUpdateRepository;
         this.plantService = plantService;
-        this.plantRepository = plantRepository;
     }
 
     @GetMapping("/add-daily-plant-update")

@@ -50,8 +50,7 @@
             <label for="plant" class="form-label required">Plant</label>
             <select class="form-select form-control" id="plant" th:field="*{plant.id}" required>
                 <option value="">Select Plant</option>
-                <option th:each="plant : ${plants}" th:value="${plant.getKey().id}" th:text="${plant.getKey().strain}"></option>
-            </select>
+                <option th:each="plant : ${plants}" th:value="${plant.getKey().id}" th:text="${plant.getKey().strain.name + ' - ' + plant.getKey().startOfGerminationStage}"></option>            </select>
         </div>
 
         <div class="mb-3">

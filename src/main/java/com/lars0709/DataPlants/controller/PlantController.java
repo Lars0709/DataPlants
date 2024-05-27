@@ -1,6 +1,7 @@
 package com.lars0709.DataPlants.controller;
 
 import com.lars0709.DataPlants.model.Plant;
+import com.lars0709.DataPlants.repository.DailyPlantUpdateRepository;
 import com.lars0709.DataPlants.service.PlantService;
 import com.lars0709.DataPlants.service.StrainService;
 import org.springframework.beans.propertyeditors.CustomNumberEditor;
@@ -18,10 +19,12 @@ public class PlantController {
 
     private final PlantService plantService;
     private final StrainService strainService;
+    private final DailyPlantUpdateRepository dailyPlantUpdateRepository;
 
-    public PlantController(PlantService plantService, StrainService strainService) {
+    public PlantController(PlantService plantService, StrainService strainService, DailyPlantUpdateRepository dailyPlantUpdateRepository) {
         this.plantService = plantService;
         this.strainService = strainService;
+        this.dailyPlantUpdateRepository = dailyPlantUpdateRepository;
     }
 
     @InitBinder
@@ -43,20 +46,23 @@ public class PlantController {
         return "plant/plants";
     }
 
+
     @GetMapping("/plants/{id}")
     public String getPlant(@PathVariable Long id, Model model) {
         Optional<Plant> optionalPlant = plantService.getPlantById(id);
-        if(optionalPlant.isPresent()) {
+        if (optionalPlant.isPresent()) {
             Plant plant = optionalPlant.get();
             String imageDataBase64 = Base64.getEncoder().encodeToString(plant.getStrain().getImageData());
             model.addAttribute("plant", plant);
             model.addAttribute("imageData", imageDataBase64);
+
             return "plant/plant-details";
         } else {
             // handle case when plant is not found
             return "error/error404";
         }
     }
+
 
     @GetMapping("/plants/add")
     public String getAddPlantForm(Model model) {
@@ -67,15 +73,15 @@ public class PlantController {
 
     @PostMapping("/plants/add")
     public String savePlant(@ModelAttribute Plant plant,
-                             @RequestParam(value = "startOfGerminationStage") LocalDate startOfGerminationStage,
-                             @RequestParam(value = "startOfSeedlingStage", required = false) LocalDate startOfSeedlingStage,
-                             @RequestParam(value = "startOfVegetativeStage", required = false) LocalDate startOfVegetativeStage,
-                             @RequestParam(value = "startOfFloweringStage", required = false) LocalDate startOfFloweringStage,
-                             @RequestParam(value = "harvestDate", required = false) LocalDate harvestDate,
-                             @RequestParam(value = "startDryingDate", required = false) LocalDate startDryingDate,
-                             @RequestParam(value = "startCuringDate", required = false) LocalDate startCuringDate,
-                             @RequestParam(value = "harvestWeight", required = false) Integer harvestWeight,
-                             @RequestParam(value = "status") boolean status){
+                            @RequestParam(value = "startOfGerminationStage") LocalDate startOfGerminationStage,
+                            @RequestParam(value = "startOfSeedlingStage", required = false) LocalDate startOfSeedlingStage,
+                            @RequestParam(value = "startOfVegetativeStage", required = false) LocalDate startOfVegetativeStage,
+                            @RequestParam(value = "startOfFloweringStage", required = false) LocalDate startOfFloweringStage,
+                            @RequestParam(value = "harvestDate", required = false) LocalDate harvestDate,
+                            @RequestParam(value = "startDryingDate", required = false) LocalDate startDryingDate,
+                            @RequestParam(value = "startCuringDate", required = false) LocalDate startCuringDate,
+                            @RequestParam(value = "harvestWeight", required = false) Integer harvestWeight,
+                            @RequestParam(value = "status") boolean status) {
 
         try {
             // Set the numerical values in the Strain entity
@@ -102,7 +108,7 @@ public class PlantController {
     @GetMapping("/plants/edit/{id}")
     public String editPlant(@PathVariable Long id, Model model) {
         Optional<Plant> optionalPlant = plantService.getPlantById(id);
-        if(optionalPlant.isPresent()) {
+        if (optionalPlant.isPresent()) {
             Plant plant = optionalPlant.get();
             model.addAttribute("plant", plant);
             model.addAttribute("strains", strainService.getAllStrains());
@@ -115,7 +121,7 @@ public class PlantController {
     @PostMapping("/plants/edit/{id}")
     public String updatePlant(@PathVariable Long id, @ModelAttribute Plant plant) {
         Optional<Plant> optionalPlant = plantService.getPlantById(id);
-        if(optionalPlant.isPresent()) {
+        if (optionalPlant.isPresent()) {
             Plant existingPlant = optionalPlant.get();
             existingPlant.setStartOfGerminationStage(plant.getStartOfGerminationStage());
             existingPlant.setStartOfSeedlingStage(plant.getStartOfSeedlingStage());
