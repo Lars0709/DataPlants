@@ -88,12 +88,13 @@
 
     <div class="text-center">
         <a th:href="@{'/plants/edit/' + ${plant.id}}" class="btn btn-success" style="padding: .375rem 8rem;">Edit</a>
+
         <!-- Delete button -->
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"
-                style="padding: .375rem 8rem;">Delete
-        </button>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" style="padding: .375rem 8rem;">Delete</button>
     </div>
+
 </div>
+
 
 <!-- Delete confirmation modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">

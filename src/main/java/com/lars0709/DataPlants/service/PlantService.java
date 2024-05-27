@@ -30,11 +30,10 @@ public class PlantService {
         return plantRepository.findById(id);
     }
 
-    public List<Plant> getAllActivePlants() {
-        return plantRepository.findAllByStatus(true);
-    }
-
     public void deletePlantById(Long id) {
         plantRepository.deleteById(id);
     }
+
+
+
 }
