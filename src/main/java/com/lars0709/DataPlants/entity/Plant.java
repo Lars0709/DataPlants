@@ -1,4 +1,4 @@
-package com.lars0709.DataPlants.model;
+package com.lars0709.DataPlants.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -61,6 +61,4 @@ public class Plant {
 
     @Column(name = "status", nullable = false)
     private boolean status;
-
-    // Other fields and relationships...
 }

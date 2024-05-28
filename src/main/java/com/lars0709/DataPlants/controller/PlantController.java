@@ -1,6 +1,6 @@
 package com.lars0709.DataPlants.controller;
 
-import com.lars0709.DataPlants.model.Plant;
+import com.lars0709.DataPlants.entity.Plant;
 import com.lars0709.DataPlants.repository.DailyPlantUpdateRepository;
 import com.lars0709.DataPlants.service.PlantService;
 import com.lars0709.DataPlants.service.StrainService;

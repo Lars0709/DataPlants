@@ -1,4 +1,4 @@
-package com.lars0709.DataPlants.model;
+package com.lars0709.DataPlants.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

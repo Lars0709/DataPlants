@@ -1,6 +1,6 @@
 package com.lars0709.DataPlants.controller;
 
-import com.lars0709.DataPlants.model.Strain;
+import com.lars0709.DataPlants.entity.Strain;
 import com.lars0709.DataPlants.repository.StrainRepository;
 import com.lars0709.DataPlants.service.StrainService;
 import org.springframework.beans.propertyeditors.CustomNumberEditor;
