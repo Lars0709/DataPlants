@@ -1,6 +1,6 @@
 package com.lars0709.DataPlants.service;
 
-import com.lars0709.DataPlants.model.Strain;
+import com.lars0709.DataPlants.entity.Strain;
 import com.lars0709.DataPlants.repository.StrainRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

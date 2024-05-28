@@ -1,9 +1,8 @@
 package com.lars0709.DataPlants.controller;
 
-import com.lars0709.DataPlants.model.DailyPlantUpdate;
-import com.lars0709.DataPlants.model.Plant;
+import com.lars0709.DataPlants.entity.DailyPlantUpdate;
+import com.lars0709.DataPlants.entity.Plant;
 import com.lars0709.DataPlants.repository.DailyPlantUpdateRepository;
-import com.lars0709.DataPlants.repository.PlantRepository;
 import com.lars0709.DataPlants.service.DailyPlantUpdateService;
 import com.lars0709.DataPlants.service.PlantService;
 import org.springframework.stereotype.Controller;

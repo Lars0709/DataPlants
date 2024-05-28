@@ -19,4 +19,9 @@ public class MasterController {
         return "information";
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
 }

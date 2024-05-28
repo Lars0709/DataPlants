@@ -1,4 +1,4 @@
-package com.lars0709.DataPlants.model;
+package com.lars0709.DataPlants.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -62,6 +62,4 @@ public class DailyPlantUpdate {
     @Lob
     @Column(name = "image_data")
     private byte[] imageData;
-
-    // Other fields and relationships...
 }

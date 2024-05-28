@@ -1,6 +1,6 @@
 package com.lars0709.DataPlants.repository;
 
-import com.lars0709.DataPlants.model.Plant;
+import com.lars0709.DataPlants.entity.Plant;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

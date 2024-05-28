@@ -1,7 +1,7 @@
 package com.lars0709.DataPlants.repository;
 
-import com.lars0709.DataPlants.model.DailyPlantUpdate;
-import com.lars0709.DataPlants.model.Plant;
+import com.lars0709.DataPlants.entity.DailyPlantUpdate;
+import com.lars0709.DataPlants.entity.Plant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
