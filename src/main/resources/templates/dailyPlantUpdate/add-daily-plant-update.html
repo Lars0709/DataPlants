@@ -30,6 +30,35 @@
             background-color: #198754;
             border-color: #198754;
         }
+
+        .dark-modal .modal-content {
+            background-color: #343a40;
+            color: #fff;
+            border-color: #495057;
+        }
+
+        .dark-modal .modal-header,
+        .dark-modal .modal-footer {
+            border-color: #495057;
+        }
+
+        .dark-modal .btn-close {
+            color: #fff;
+        }
+
+        .dark-modal .form-check-label {
+            color: #fff;
+        }
+
+        .dark-modal .form-check-input {
+            border-color: #fff;
+            background-color: #495057;
+        }
+
+        .dark-modal .form-check-input:checked {
+            background-color: #198754;
+            border-color: #198754;
+        }
     </style>
 </head>
 <body>
@@ -50,7 +79,8 @@
             <label for="plant" class="form-label required">Plant</label>
             <select class="form-select form-control" id="plant" th:field="*{plant.id}" required>
                 <option value="">Select Plant</option>
-                <option th:each="plant : ${plants}" th:value="${plant.getKey().id}" th:text="${plant.getKey().strain.name + ' - ' + plant.getKey().startOfGerminationStage}"></option>
+                <option th:each="plant : ${plants}" th:value="${plant.getKey().id}"
+                        th:text="${plant.getKey().strain.name + ' - ' + plant.getKey().startOfGerminationStage}"></option>
             </select>
         </div>
 
@@ -74,10 +104,59 @@
             <input type="text" class="form-control" id="water" th:field="*{water}">
         </div>
 
+
+        <!-- Nutrients field and button to open the modal -->
         <div class="mb-3">
             <label for="nutrients" class="form-label">Nutrients</label>
-            <input type="text" class="form-control" id="nutrients" th:field="*{nutrients}">
+            <div class="input-group">
+                <input type="text" class="form-control" id="nutrients" th:field="*{nutrients}">
+                <button type="button" class="btn btn-outline-secondary" id="openNutrientsModal">Select Nutrients
+                </button>
+            </div>
         </div>
+
+        <!-- Nutrients modal -->
+        <div class="modal fade dark-modal" id="nutrientsModal" tabindex="-1" aria-labelledby="nutrientsModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content dark-modal">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="nutrientsModalLabel">Select Nutrients</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Nutrient options with associated input fields -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="plagronAlgoGrowCheck">
+                            <label class="form-check-label" for="plagronAlgoGrowCheck">Plagron Algo Grow</label>
+                            <input type="text" class="form-control" id="plagronAlgoGrowInput" style="display: none;">
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="plagronAlgaBloomCheck">
+                            <label class="form-check-label" for="plagronAlgaBloomCheck">Plagron Alga Bloom</label>
+                            <input type="text" class="form-control" id="plagronAlgaBloomInput" style="display: none;">
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="plagronPowerRootsCheck">
+                            <label class="form-check-label" for="plagronPowerRootsCheck">Plagron Power Roots</label>
+                            <input type="text" class="form-control" id="plagronPowerRootsInput" style="display: none;">
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="biobizzCalMagCheck">
+                            <label class="form-check-label" for="biobizzCalMagCheck">Biobizz CalMag</label>
+                            <input type="text" class="form-control" id="biobizzCalMagInput" style="display: none;">
+                        </div>
+                        <!-- Add more nutrient options here... -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="confirmNutrientsSelection">Save changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <div class="mb-3">
             <label for="stage" class="form-label">Stage</label>
@@ -102,6 +181,56 @@
 
 <!-- Include Bootstrap JS and its dependencies below -->
 <script src="/static/js/bootstrap.bundle.min.js"></script>
+<script>
+// Open the nutrients modal when the button is clicked
+document.getElementById('openNutrientsModal').addEventListener('click', function () {
+    var myModal = new bootstrap.Modal(document.getElementById('nutrientsModal'), {});
+    myModal.show();
+});
+// Function to toggle visibility of associated input field when a checkbox is checked or unchecked
+function toggleInputField(checkboxId, inputFieldId) {
+    document.getElementById(checkboxId).addEventListener('change', function () {
+        var inputField = document.getElementById(inputFieldId);
+        if (this.checked) {
+            inputField.style.display = 'block';
+        } else {
+            inputField.style.display = 'none';
+        }
+    });
+}
 
+// Call the function for each nutrient option
+toggleInputField('plagronAlgoGrowCheck', 'plagronAlgoGrowInput');
+toggleInputField('plagronAlgaBloomCheck', 'plagronAlgaBloomInput');
+toggleInputField('plagronPowerRootsCheck', 'plagronPowerRootsInput');
+toggleInputField('biobizzCalMagCheck', 'biobizzCalMagInput');
+// Add more calls here for additional nutrient options...
+
+// Save the selected nutrients and their values when the user confirms their selection
+document.getElementById('confirmNutrientsSelection').addEventListener('click', function () {
+    var selectedNutrients = [];
+    if (document.getElementById('plagronAlgoGrowCheck').checked) {
+        var value = document.getElementById('plagronAlgoGrowInput').value;
+        selectedNutrients.push('Plagron Algo Grow: ' + value);
+    }
+    if (document.getElementById('plagronAlgaBloomCheck').checked) {
+        var value = document.getElementById('plagronAlgaBloomInput').value;
+        selectedNutrients.push('Plagron Alga Bloom: ' + value);
+    }
+    if (document.getElementById('plagronPowerRootsCheck').checked) {
+        var value = document.getElementById('plagronPowerRootsInput').value;
+        selectedNutrients.push('Plagron Power Roots: ' + value);
+    }
+    if (document.getElementById('biobizzCalMagCheck').checked) {
+        var value = document.getElementById('biobizzCalMagInput').value;
+        selectedNutrients.push('Biobizz CalMag: ' + value);
+    }
+    // Add conditions for the other nutrient options here...
+
+    document.getElementById('nutrients').value = selectedNutrients.join(', ');
+    var myModal = bootstrap.Modal.getInstance(document.getElementById('nutrientsModal'));
+    myModal.hide();
+});
+</script>
 </body>
 </html>
