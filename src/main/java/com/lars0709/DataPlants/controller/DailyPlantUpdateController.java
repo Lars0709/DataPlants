@@ -80,6 +80,11 @@ public class DailyPlantUpdateController {
     public String getDailyUpdates(Model model) {
         List<DailyPlantUpdate> dailyPlantUpdates = dailyPlantUpdateRepository.findAll();
         model.addAttribute("dailyPlantUpdates", dailyPlantUpdates);
+
+        if (!dailyPlantUpdates.isEmpty()) {
+            model.addAttribute("update", dailyPlantUpdates.get(0));
+        }
+
         return "dailyPlantUpdate/daily-updates";
     }
 

@@ -187,35 +187,24 @@ document.getElementById('openNutrientsModal').addEventListener('click', function
     var myModal = new bootstrap.Modal(document.getElementById('nutrientsModal'), {});
     myModal.show();
 });
+// Function to toggle visibility of associated input field when a checkbox is checked or unchecked
+function toggleInputField(checkboxId, inputFieldId) {
+    document.getElementById(checkboxId).addEventListener('change', function () {
+        var inputField = document.getElementById(inputFieldId);
+        if (this.checked) {
+            inputField.style.display = 'block';
+        } else {
+            inputField.style.display = 'none';
+        }
+    });
+}
 
-// Show or hide the input field when the checkbox is checked or unchecked
-document.getElementById('plagronAlgoGrowCheck').addEventListener('change', function () {
-    var inputField = document.getElementById('plagronAlgoGrowInput');
-    if (this.checked) {
-        inputField.style.display = 'block';
-    } else {
-        inputField.style.display = 'none';
-    }
-});
-
-// Do the same for the other nutrient fields
-document.getElementById('nutrientField1Check').addEventListener('change', function () {
-    var inputField = document.getElementById('nutrientField1Input');
-    if (this.checked) {
-        inputField.style.display = 'block';
-    } else {
-        inputField.style.display = 'none';
-    }
-});
-
-document.getElementById('nutrientField2Check').addEventListener('change', function () {
-    var inputField = document.getElementById('nutrientField2Input');
-    if (this.checked) {
-        inputField.style.display = 'block';
-    } else {
-        inputField.style.display = 'none';
-    }
-});
+// Call the function for each nutrient option
+toggleInputField('plagronAlgoGrowCheck', 'plagronAlgoGrowInput');
+toggleInputField('plagronAlgaBloomCheck', 'plagronAlgaBloomInput');
+toggleInputField('plagronPowerRootsCheck', 'plagronPowerRootsInput');
+toggleInputField('biobizzCalMagCheck', 'biobizzCalMagInput');
+// Add more calls here for additional nutrient options...
 
 // Save the selected nutrients and their values when the user confirms their selection
 document.getElementById('confirmNutrientsSelection').addEventListener('click', function () {
@@ -224,23 +213,24 @@ document.getElementById('confirmNutrientsSelection').addEventListener('click', f
         var value = document.getElementById('plagronAlgoGrowInput').value;
         selectedNutrients.push('Plagron Algo Grow: ' + value);
     }
-
-    // Add conditions for the other nutrient options
-    if (document.getElementById('nutrientField1Check').checked) {
-        var value = document.getElementById('nutrientField1Input').value;
-        selectedNutrients.push('Nutrient Field 1: ' + value);
+    if (document.getElementById('plagronAlgaBloomCheck').checked) {
+        var value = document.getElementById('plagronAlgaBloomInput').value;
+        selectedNutrients.push('Plagron Alga Bloom: ' + value);
     }
-
-    if (document.getElementById('nutrientField2Check').checked) {
-        var value = document.getElementById('nutrientField2Input').value;
-        selectedNutrients.push('Nutrient Field 2: ' + value);
+    if (document.getElementById('plagronPowerRootsCheck').checked) {
+        var value = document.getElementById('plagronPowerRootsInput').value;
+        selectedNutrients.push('Plagron Power Roots: ' + value);
     }
+    if (document.getElementById('biobizzCalMagCheck').checked) {
+        var value = document.getElementById('biobizzCalMagInput').value;
+        selectedNutrients.push('Biobizz CalMag: ' + value);
+    }
+    // Add conditions for the other nutrient options here...
 
     document.getElementById('nutrients').value = selectedNutrients.join(', ');
     var myModal = bootstrap.Modal.getInstance(document.getElementById('nutrientsModal'));
     myModal.hide();
 });
-
 </script>
 </body>
 </html>

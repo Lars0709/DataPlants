@@ -104,8 +104,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="update : ${dailyPlantUpdates}" th:id="${'row' + update.id}">
-            <td th:text="${update.entryDate}"></td>
+        <tr th:each="dailyPlantUpdate : ${dailyPlantUpdates}" th:data-href="@{'/dailyupdates/details/' + ${dailyPlantUpdate.id}}">
+            <td th:text="${dailyPlantUpdate.entryDate}"></td>
             <td th:text="${update.plant.strain.name}"></td>
             <td th:text="${update.week}"></td>
             <td th:text="${update.day}"></td>
@@ -127,6 +127,17 @@
             "info": false,
         });
     } );
+
+    $(document).ready(function() {
+        // Add a click event listener to each table row
+        $('#myTable tbody tr').on('click', function() {
+            // Get the URL from the data-href attribute
+            var href = $(this).data('href');
+
+            // Navigate to the URL
+            window.location.href = href;
+        });
+    });
 </script>
 </body>
 </html>
