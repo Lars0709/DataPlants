@@ -1,6 +1,7 @@
 package com.lars0709.DataPlants.controller;
 
 import com.lars0709.DataPlants.entity.Plant;
+import com.lars0709.DataPlants.entity.DailyPlantUpdate;
 import com.lars0709.DataPlants.repository.DailyPlantUpdateRepository;
 import com.lars0709.DataPlants.service.PlantService;
 import com.lars0709.DataPlants.service.StrainService;
@@ -55,6 +56,10 @@ public class PlantController {
             String imageDataBase64 = Base64.getEncoder().encodeToString(plant.getStrain().getImageData());
             model.addAttribute("plant", plant);
             model.addAttribute("imageData", imageDataBase64);
+
+            // Add dailyPlantUpdates to the model
+            List<DailyPlantUpdate> dailyPlantUpdates = dailyPlantUpdateRepository.findAll();
+            model.addAttribute("dailyPlantUpdates", dailyPlantUpdates);
 
             return "plant/plant-details";
         } else {
