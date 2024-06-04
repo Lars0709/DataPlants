@@ -3,6 +3,13 @@
 <head>
     <title>Plant Details</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.11.3/datatables.min.css"/>
+
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.11.3/datatables.min.js"></script>
     <style>
         body {
             background-color: #343a40;
@@ -96,6 +103,36 @@
 </div>
 
 
+<div class="container mt-4">
+    <table id="myTable" class="table table-dark table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Entry Date</th>
+            <th scope="col">Week</th>
+            <th scope="col">Day</th>
+            <th scope="col">Water</th>
+            <th scope="col">Nutrients</th>
+            <th scope="col">Stage</th>
+            <th scope="col">Comment</th>
+            <th scope="col">Problem</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="dailyPlantUpdate : ${dailyPlantUpdates}">
+            <td th:text="${dailyPlantUpdate.entryDate}"></td>
+            <td th:text="${dailyPlantUpdate.week}"></td>
+            <td th:text="${dailyPlantUpdate.day}"></td>
+            <td th:text="${dailyPlantUpdate.water}"></td>
+            <td th:text="${dailyPlantUpdate.nutrients}"></td>
+            <td th:text="${dailyPlantUpdate.stage}"></td>
+            <td th:text="${dailyPlantUpdate.comment}"></td>
+            <td th:text="${dailyPlantUpdate.problem}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
 <!-- Delete confirmation modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -119,5 +156,12 @@
 </div>
 
 <script th:src="@{/js/bootstrap.min.js}"></script>
+<script>
+    $(document).ready( function () {
+        $('#myTable').DataTable({
+            "info": false,
+        });
+    } );
+</script>
 </body>
 </html>
