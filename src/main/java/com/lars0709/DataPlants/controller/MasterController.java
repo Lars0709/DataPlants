@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+
 @Controller
 @AllArgsConstructor
 public class MasterController {
@@ -17,11 +18,6 @@ public class MasterController {
     @GetMapping(value = "/information")
     private String websiteInformationPage() {
         return "information";
-    }
-
-    @GetMapping("/login")
-    public String login() {
-        return "login";
     }
 
 }
