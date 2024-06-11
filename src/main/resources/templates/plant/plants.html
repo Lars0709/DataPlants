@@ -40,7 +40,7 @@
 
                     <div class="card-body">
                         <h5 class="card-title"
-                            th:text="${plant.strain.name + ' | ' + plant.startOfGerminationStage}"></h5>
+                            th:text="${plant.strain.name + ' (ID: ' + plant.id + ') | ' + plant.startOfGerminationStage}"></h5>l
                         <p class="card-text"
                            th:text="${plant.strain.description != null ? (plant.strain.description.length() > 140 ? #strings.substring(plant.strain.description, 0, 140) + '...' : plant.strain.description) : ''}"></p>
                     </div>
