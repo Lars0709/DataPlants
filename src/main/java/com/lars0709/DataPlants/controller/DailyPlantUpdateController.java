@@ -5,7 +5,9 @@ import com.lars0709.DataPlants.entity.Plant;
 import com.lars0709.DataPlants.repository.DailyPlantUpdateRepository;
 import com.lars0709.DataPlants.service.DailyPlantUpdateService;
 import com.lars0709.DataPlants.service.PlantService;
+import jakarta.transaction.TransactionScoped;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +24,6 @@ public class DailyPlantUpdateController {
     private final DailyPlantUpdateService dailyPlantUpdateService;
     private final DailyPlantUpdateRepository dailyPlantUpdateRepository;
     private final PlantService plantService;
-
 
 
     public DailyPlantUpdateController(DailyPlantUpdateService dailyPlantUpdateService,
@@ -152,6 +153,23 @@ public class DailyPlantUpdateController {
     public String deleteDailyUpdate(@PathVariable Long id) {
         dailyPlantUpdateService.deleteDailyPlantUpdateById(id);
         return "redirect:/dailyupdates";
+    }
+
+    @Transactional
+    @GetMapping("/dailyupdates/images/{plantId}")
+    public String getDailyUpdateImages(@PathVariable Long plantId, Model model) {
+        List<DailyPlantUpdate> dailyPlantUpdates = dailyPlantUpdateRepository.findByPlantId(plantId);
+
+        // Sort the dailyPlantUpdates list by entryDate
+        Collections.sort(dailyPlantUpdates, Comparator.comparing(DailyPlantUpdate::getEntryDate));
+
+        Map<DailyPlantUpdate, String> dailyPlantUpdateImageMap = new LinkedHashMap<>();
+        for (DailyPlantUpdate dailyPlantUpdate : dailyPlantUpdates) {
+            String imageDataBase64 = Base64.getEncoder().encodeToString(dailyPlantUpdate.getImageData());
+            dailyPlantUpdateImageMap.put(dailyPlantUpdate, imageDataBase64);
+        }
+        model.addAttribute("dailyPlantUpdates", dailyPlantUpdateImageMap);
+        return "plant/plant-images";
     }
 
 }
