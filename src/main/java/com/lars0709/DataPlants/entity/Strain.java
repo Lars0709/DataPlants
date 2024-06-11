@@ -19,7 +19,7 @@ public class Strain {
                   Integer sativaLevel, Integer indicaLevel, Integer ruderalisLevel, List<String> feelings,
                   List<String> tastes, String seedOrigin, Integer pricePerSeed, Integer floweringPhaseMin,
                   Integer floweringPhaseMax, Integer seedToHarvestMin, Integer seedToHarvestMax, Integer indoorYieldMin,
-                  Integer indoorYieldMax, byte[] imageData) {
+                  Integer indoorYieldMax, Integer availableSeeds, byte[] imageData) {
 
         this.name = name;
         this.description = description;
@@ -44,6 +44,7 @@ public class Strain {
         this.seedToHarvestMax = seedToHarvestMax;
         this.indoorYieldMin = indoorYieldMin;
         this.indoorYieldMax = indoorYieldMax;
+        this.availableSeeds = availableSeeds;
         this.imageData = imageData;
     }
 
@@ -120,6 +121,9 @@ public class Strain {
 
     @Column(name = "indoor_yield_max")
     private Integer indoorYieldMax; //
+
+    @Column(name = "available_seeds")
+    private Integer availableSeeds;
 
     @Lob
     @Column(name = "image_data")

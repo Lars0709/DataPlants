@@ -89,6 +89,7 @@
                     <p><strong>Indoor Yield:</strong> <span
                             th:text="${strain.indoorYieldMin ?: '?'} + ' - ' + ${strain.indoorYieldMax ?: '?'}"></span>
                         grams</p>
+                    <p><strong>Available Seeds:</strong> <span th:text="${strain.getAvailableSeeds() ?: '?'}"></span></p>
                 </div>
             </div>
         </div>

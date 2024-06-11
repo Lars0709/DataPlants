@@ -184,7 +184,7 @@
 
         <div class="row">
 
-            <div class="col-md-6 mb-3">
+            <div class="col-md-4 mb-3">
                 <label for="seedOrigin" class="form-label required">Seed Origin</label>
                 <select class="form-select form-control" id="seedOrigin" th:field="*{seedOrigin}" required>
                     <option value="">Select Seed Origin</option>
@@ -198,9 +198,14 @@
                 </div>
             </div>
 
-            <div class="col-md-6 mb-3">
+            <div class="col-md-4 mb-3">
                 <label for="pricePerSeed" class="form-label required">Price Per Seed in €</label>
                 <input type="number" class="form-control" id="pricePerSeed" min="0" th:field="*{pricePerSeed}" required>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="availableSeeds" class="form-label">Available Seeds</label>
+                <input type="number" class="form-control" id="availableSeeds" name="availableSeeds" min="0">
             </div>
         </div>
 

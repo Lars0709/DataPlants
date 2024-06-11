@@ -62,7 +62,7 @@
         <div class="col">
             <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
                 <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
-                    <h1 class="mb-4 display-6 lh-1 fw-bold" th:text="${plant.strain.name}"></h1>
+                    <h1 class="mb-4 display-6 lh-1 fw-bold" th:text="${plant.strain.name + ' (ID: ' + plant.id + ')'}"></h1>
                     <p th:text="${#strings.arrayJoin(plant.strain.aliases, ', ')}"></p>
                     <p th:text="${plant.strain.description}"></p>
                 </div>
@@ -118,7 +118,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="dailyPlantUpdate : ${dailyPlantUpdates}">
+        <tr th:each="dailyPlantUpdate : ${dailyPlantUpdates}" th:data-href="@{'/dailyupdates/details/' + ${dailyPlantUpdate.id}}">
             <td th:text="${dailyPlantUpdate.entryDate}"></td>
             <td th:text="${dailyPlantUpdate.week}"></td>
             <td th:text="${dailyPlantUpdate.day}"></td>
@@ -162,6 +162,17 @@
             "info": false,
         });
     } );
+
+    $(document).ready(function() {
+        // Add a click event listener to each table row
+        $('#myTable tbody tr').on('click', function() {
+            // Get the URL from the data-href attribute
+            var href = $(this).data('href');
+
+            // Navigate to the URL
+            window.location.href = href;
+        });
+    });
 </script>
 </body>
 </html>

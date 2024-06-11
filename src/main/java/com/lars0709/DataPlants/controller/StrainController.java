@@ -60,7 +60,8 @@ public class StrainController {
                              @RequestParam(value = "seedToHarvestMin", required = false) Integer seedToHarvestMin,
                              @RequestParam(value = "seedToHarvestMax", required = false) Integer seedToHarvestMax,
                              @RequestParam(value = "indoorYieldMin", required = false) Integer indoorYieldMin,
-                             @RequestParam(value = "indoorYieldMax", required = false) Integer indoorYieldMax) {
+                             @RequestParam(value = "indoorYieldMax", required = false) Integer indoorYieldMax,
+                             @RequestParam(value = "availableSeeds", required = false) Integer availableSeeds) {
 
         try {
             List<String> aliasesList = aliases != null ? Arrays.asList(aliases.split(",")) : new ArrayList<>();
@@ -88,6 +89,7 @@ public class StrainController {
             strain.setSeedToHarvestMax(seedToHarvestMax);
             strain.setIndoorYieldMin(indoorYieldMin);
             strain.setIndoorYieldMax(indoorYieldMax);
+            strain.setAvailableSeeds(availableSeeds);
             strain.setImageData(multipartFile.getBytes());
 
             // Save the Strain entity
@@ -144,7 +146,7 @@ public class StrainController {
     public String updateStrain(@PathVariable("id") long id, @Valid Strain strain, BindingResult result, Model model,
                                @RequestParam("image") MultipartFile multipartFile) {
         if (result.hasErrors()) {
-            return "edit-strain";
+            return "strain/edit-strain";
         }
 
         Optional<Strain> existingStrainOpt = strainRepository.findById(id);
@@ -172,6 +174,8 @@ public class StrainController {
         existingStrain.setSeedToHarvestMax(strain.getSeedToHarvestMax());
         existingStrain.setIndoorYieldMin(strain.getIndoorYieldMin());
         existingStrain.setIndoorYieldMax(strain.getIndoorYieldMax());
+        existingStrain.setAvailableSeeds(strain.getAvailableSeeds());
+
         // update other fields...
 
         // Add this block to handle the image file

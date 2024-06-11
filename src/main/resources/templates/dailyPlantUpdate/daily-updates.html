@@ -93,6 +93,7 @@
         <thead>
         <tr>
             <th scope="col">Entry Date</th>
+            <th scope="col">Plant ID</th>
             <th scope="col">Strain</th>
             <th scope="col">Week</th>
             <th scope="col">Day</th>
@@ -106,6 +107,7 @@
         <tbody>
         <tr th:each="dailyPlantUpdate : ${dailyPlantUpdates}" th:data-href="@{'/dailyupdates/details/' + ${dailyPlantUpdate.id}}">
             <td th:text="${dailyPlantUpdate.entryDate}"></td>
+            <td th:text="${dailyPlantUpdate.plant.id}"></td>
             <td th:text="${update.plant.strain.name}"></td>
             <td th:text="${update.week}"></td>
             <td th:text="${update.day}"></td>
