@@ -1,20 +1,54 @@
-<!-- src/main/resources/templates/user/add-user.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Add New User</title>
-    <!-- Add your CSS and JS files here -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <style>
+        body {
+            background-color: #343a40;
+            color: #fff;
+        }
+        .form-control {
+            background-color: #495057;
+            border-color: #495057;
+            color: #fff;
+        }
+        .form-control:focus {
+            background-color: #495057;
+            border-color: #198754;
+            color: #fff;
+        }
+        .form-check-input:checked {
+            background-color: #198754;
+            border-color: #198754;
+        }
+        .btn-primary {
+            background-color: #198754;
+            border-color: #198754;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <h1>Add New User</h1>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container mt-5">
     <form th:action="@{/users/add}" th:object="${user}" method="post">
-        <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" id="username" th:field="*{username}" class="form-control" required>
+
+        <h1 class="h3 mb-3 fw-normal">Please enter User to create</h1>
+
+        <div class="form-floating">
+            <input type="text" id="username" th:field="*{username}" class="form-control" placeholder="name@example.com" required>
+            <label for="username">Username</label>
         </div>
         <!-- Add more fields as needed -->
-        <button type="submit" class="btn btn-primary">Submit</button>
+
+        <div class="form-check text-start my-3">
+            <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                Remember me
+            </label>
+        </div>
+        <button type="submit" class="btn btn-primary w-100 py-2">Submit</button>
     </form>
 </div>
 </body>
