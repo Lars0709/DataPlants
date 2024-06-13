@@ -5,7 +5,7 @@ import com.lars0709.DataPlants.entity.Plant;
 import com.lars0709.DataPlants.repository.DailyPlantUpdateRepository;
 import com.lars0709.DataPlants.service.DailyPlantUpdateService;
 import com.lars0709.DataPlants.service.PlantService;
-import jakarta.transaction.TransactionScoped;
+import com.lars0709.DataPlants.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,7 +63,6 @@ public class DailyPlantUpdateController {
             dailyPlantUpdate.setComment(dailyPlantUpdate.getComment());
             dailyPlantUpdate.setProblem(dailyPlantUpdate.getProblem());
             dailyPlantUpdate.setImageData(multipartFile.getBytes());
-
 
             // Save the DailyPlantUpdate entity
             dailyPlantUpdateService.save(dailyPlantUpdate);
