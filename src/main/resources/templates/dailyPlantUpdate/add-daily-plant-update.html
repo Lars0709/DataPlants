@@ -157,10 +157,16 @@
             </div>
         </div>
 
-
         <div class="mb-3">
-            <label for="stage" class="form-label">Stage</label>
-            <input type="text" class="form-control" id="stage" th:field="*{stage}">
+            <label for="stage" class="form-label required">Stage</label>
+            <select class="form-control" id="stage" th:field="*{stage}" required>
+                <option value="">Select Stage</option>
+                <option value="Germination">Germination</option>
+                <option value="Seedling">Seedling</option>
+                <option value="Vegetative">Vegetative</option>
+                <option value="Pre-flower">Pre-flower</option>
+                <option value="Flower">Flower</option>
+            </select>
         </div>
 
         <div class="mb-3">

@@ -9,10 +9,12 @@
       color: #fff;
     }
     .card {
-      height: 500px; /* Adjust this value to change the card height */
+      height: 400px; /* Adjust as needed */
+      object-fit: cover;
     }
     .card-img-top {
-      height: 85%; /* Adjust this value to change the image height */
+      width: 100%;
+      height: 300px; /* Adjust as needed */
       object-fit: cover;
     }
     .card-date {
@@ -29,10 +31,12 @@
 <div class="container px-4 py-5" id="custom-cards">
   <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
     <div th:each="entry : ${dailyPlantUpdates.entrySet()}" class="col">
-      <div class="card bg-dark text-white">
+      <div class="card bg-dark text-white" th:data-href="@{'/dailyupdates/details/' + ${entry.key.id}}">
         <img th:src="'data:image/jpeg;base64,' + ${entry.value}" class="card-img-top" alt="Plant image">
-        <div class="card-body p-0"> <!-- Remove padding -->
+        <div class="card-body p-0">
           <p class="card-date" th:text="${entry.key.entryDate}"></p>
+          <p class="card-date" th:text="${entry.key.day != null && entry.key.day != 0 ? 'Day: ' + entry.key.day : 'Day: No information'}"></p>
+          <p class="card-date" th:text="${entry.key.stage != null && entry.key.stage != 0 ? 'Stage: ' + entry.key.stage : 'Stage: No information'}"></p>
         </div>
       </div>
     </div>
@@ -40,5 +44,17 @@
 </div>
 
 <script th:src="@{/js/bootstrap.min.js}"></script>
+<script>
+  // Add a click event listener to each card
+  document.querySelectorAll('.card').forEach(function(card) {
+    card.addEventListener('click', function() {
+      // Get the URL from the data-href attribute
+      var href = this.dataset.href;
+
+      // Navigate to the URL
+      window.location.href = href;
+    });
+  });
+</script>
 </body>
 </html>
