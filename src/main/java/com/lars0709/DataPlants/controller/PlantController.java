@@ -5,6 +5,7 @@ import com.lars0709.DataPlants.entity.DailyPlantUpdate;
 import com.lars0709.DataPlants.repository.DailyPlantUpdateRepository;
 import com.lars0709.DataPlants.service.PlantService;
 import com.lars0709.DataPlants.service.StrainService;
+import com.lars0709.DataPlants.service.UserService;
 import org.springframework.beans.propertyeditors.CustomNumberEditor;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -21,11 +22,13 @@ public class PlantController {
     private final PlantService plantService;
     private final StrainService strainService;
     private final DailyPlantUpdateRepository dailyPlantUpdateRepository;
+    private final UserService userService;
 
-    public PlantController(PlantService plantService, StrainService strainService, DailyPlantUpdateRepository dailyPlantUpdateRepository) {
+    public PlantController(PlantService plantService, StrainService strainService, DailyPlantUpdateRepository dailyPlantUpdateRepository, UserService userService) {
         this.plantService = plantService;
         this.strainService = strainService;
         this.dailyPlantUpdateRepository = dailyPlantUpdateRepository;
+        this.userService = userService;
     }
 
     @InitBinder
@@ -72,7 +75,8 @@ public class PlantController {
     @GetMapping("/plants/add")
     public String getAddPlantForm(Model model) {
         model.addAttribute("plant", new Plant());
-        model.addAttribute("strains", strainService.getAllStrains()); // add this line
+        model.addAttribute("strains", strainService.getAllStrains());
+        model.addAttribute("users", userService.getAllUsers());
         return "plant/add-plant";
     }
 
@@ -85,8 +89,7 @@ public class PlantController {
                             @RequestParam(value = "harvestDate", required = false) LocalDate harvestDate,
                             @RequestParam(value = "startDryingDate", required = false) LocalDate startDryingDate,
                             @RequestParam(value = "startCuringDate", required = false) LocalDate startCuringDate,
-                            @RequestParam(value = "harvestWeight", required = false) Integer harvestWeight,
-                            @RequestParam(value = "status") boolean status) {
+                            @RequestParam(value = "harvestWeight", required = false) Integer harvestWeight) {
 
         try {
             // Set the numerical values in the Strain entity
@@ -99,7 +102,6 @@ public class PlantController {
             plant.setStartDryingDate(startDryingDate);
             plant.setStartCuringDate(startCuringDate);
             plant.setHarvestWeight(harvestWeight);
-            plant.setStatus(status);
 
             // Save the Plant entity
             plantService.savePlant(plant);
@@ -136,7 +138,6 @@ public class PlantController {
             existingPlant.setStartDryingDate(plant.getStartDryingDate());
             existingPlant.setStartCuringDate(plant.getStartCuringDate());
             existingPlant.setHarvestWeight(plant.getHarvestWeight());
-            existingPlant.setStatus(plant.isStatus());
             plantService.savePlant(existingPlant);
         }
         return "redirect:/plants";

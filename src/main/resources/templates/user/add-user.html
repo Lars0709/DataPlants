@@ -1,0 +1,21 @@
+<!-- src/main/resources/templates/user/add-user.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add New User</title>
+    <!-- Add your CSS and JS files here -->
+</head>
+<body>
+<div class="container">
+    <h1>Add New User</h1>
+    <form th:action="@{/users/add}" th:object="${user}" method="post">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" th:field="*{username}" class="form-control" required>
+        </div>
+        <!-- Add more fields as needed -->
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+</body>
+</html>

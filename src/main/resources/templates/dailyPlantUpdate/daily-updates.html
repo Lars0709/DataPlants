@@ -108,14 +108,14 @@
         <tr th:each="dailyPlantUpdate : ${dailyPlantUpdates}" th:data-href="@{'/dailyupdates/details/' + ${dailyPlantUpdate.id}}">
             <td th:text="${dailyPlantUpdate.entryDate}"></td>
             <td th:text="${dailyPlantUpdate.plant.id}"></td>
-            <td th:text="${update.plant.strain.name}"></td>
-            <td th:text="${update.week}"></td>
-            <td th:text="${update.day}"></td>
-            <td th:text="${update.water}"></td>
-            <td th:text="${update.nutrients}"></td>
-            <td th:text="${update.stage}"></td>
-            <td th:text="${update.comment}"></td>
-            <td th:text="${update.problem}"></td>
+            <td th:text="${dailyPlantUpdate.plant.strain.name}"></td>
+            <td th:text="${dailyPlantUpdate.week}"></td>
+            <td th:text="${dailyPlantUpdate.day}"></td>
+            <td th:text="${dailyPlantUpdate.water}"></td>
+            <td th:text="${dailyPlantUpdate.nutrients}"></td>
+            <td th:text="${dailyPlantUpdate.stage}"></td>
+            <td th:text="${dailyPlantUpdate.comment}"></td>
+            <td th:text="${dailyPlantUpdate.problem}"></td>
         </tr>
         </tbody>
     </table>
