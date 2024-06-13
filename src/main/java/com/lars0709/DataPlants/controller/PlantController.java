@@ -9,6 +9,7 @@ import com.lars0709.DataPlants.service.UserService;
 import org.springframework.beans.propertyeditors.CustomNumberEditor;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +51,7 @@ public class PlantController {
         return "plant/plants";
     }
 
-
+    @Transactional
     @GetMapping("/plants/{id}")
     public String getPlant(@PathVariable Long id, Model model) {
         Optional<Plant> optionalPlant = plantService.getPlantById(id);
@@ -61,7 +62,7 @@ public class PlantController {
             model.addAttribute("imageData", imageDataBase64);
 
             // Add dailyPlantUpdates to the model
-            List<DailyPlantUpdate> dailyPlantUpdates = dailyPlantUpdateRepository.findAll();
+            List<DailyPlantUpdate> dailyPlantUpdates = dailyPlantUpdateRepository.findByPlantId(plant.getId());
             model.addAttribute("dailyPlantUpdates", dailyPlantUpdates);
 
             return "plant/plant-details";

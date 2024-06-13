@@ -8,7 +8,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import java.util.List;
 
 public interface DailyPlantUpdateRepository extends JpaRepository<DailyPlantUpdate, Long>, JpaSpecificationExecutor<DailyPlantUpdate> {
-    List<DailyPlantUpdate> findByPlant(Plant plant);
-
     List<DailyPlantUpdate> findByPlantId(Long plantId);
 }

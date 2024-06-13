@@ -47,12 +47,18 @@
 
         <!-- First Card: Title and Picture -->
         <div class="col">
-            <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
-                 th:style="'background-image: url(data:image/jpeg;base64,' + ${imageData} + '); background-size: cover; background-position: center; background-repeat: no-repeat;'">
-                <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
-                    <h1 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold" th:text="${strain.name}"></h1>
+            <!-- Wrap the entire card in a button that triggers the modal -->
+            <button type="button" class="btn d-flex align-items-center justify-content-center flex-fill"
+                    style="height: 100%; width: 100%; padding: 0; background: transparent; border: none;"
+                    data-bs-toggle="modal" data-bs-target="#imageModal" th:data-img="${imageData}">
+                <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg flex-fill"
+                     th:style="'background-image: url(data:image/jpeg;base64,' + ${imageData} + '); background-size: cover; background-position: center; background-repeat: no-repeat;'">
+                    <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                        <h1 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold"
+                            th:text="${strain.name}"></h1>
+                    </div>
                 </div>
-            </div>
+            </button>
         </div>
 
         <!-- Second Card: Description, Title and Aliases -->
@@ -89,7 +95,8 @@
                     <p><strong>Indoor Yield:</strong> <span
                             th:text="${strain.indoorYieldMin ?: '?'} + ' - ' + ${strain.indoorYieldMax ?: '?'}"></span>
                         grams</p>
-                    <p><strong>Available Seeds:</strong> <span th:text="${strain.getAvailableSeeds() ?: '?'}"></span></p>
+                    <p><strong>Available Seeds:</strong> <span th:text="${strain.getAvailableSeeds() ?: '?'}"></span>
+                    </p>
                 </div>
             </div>
         </div>
@@ -125,6 +132,30 @@
         </div>
     </div>
 
-    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <!-- Image Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <!-- The image source will be set dynamically when the card is clicked -->
+                    <img id="modalImage" src="" class="img-fluid" alt="Plant image">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script>
+document.querySelectorAll('[data-bs-toggle="modal"]').forEach(function(button) {
+    button.addEventListener('click', function() {
+        // Get the image data from the data-img attribute
+        var imgData = this.dataset.img;
+
+        // Set the image source in the modal
+        document.getElementById('modalImage').src = 'data:image/jpeg;base64,' + imgData;
+    });
+});
+</script>
 </body>
 </html>
